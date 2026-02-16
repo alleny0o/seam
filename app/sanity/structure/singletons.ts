@@ -6,7 +6,6 @@ import {
   InsertAboveIcon,
   InsertBelowIcon,
   CubeIcon,
-  EarthAmericasIcon,
 } from '@sanity/icons';
 
 type Singleton = {
@@ -35,12 +34,6 @@ export const SINGLETONS: {[key: string]: Singleton} = {
     _type: 'footer',
     title: 'Footer',
     icon: InsertAboveIcon,
-  },
-  localeSelector: {
-    id: 'localeSelector',
-    _type: 'localeSelector',
-    title: 'Locale Selector',
-    icon: EarthAmericasIcon,
   },
   productSectionDesign: {
     id: 'productSectionDesign',

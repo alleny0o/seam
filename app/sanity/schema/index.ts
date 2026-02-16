@@ -42,10 +42,17 @@ import sectionsList, {
 
 /**
  * ASIDE OBJECTS
- * Configuration for overlay UI patterns (sidebars, modals).
+ * Configuration for overlay UI patterns (sidebars, modals, dropdowns).
  */
+import dropdownConfig from './objects/aside/dropdown-config';
 import modalConfig from './objects/aside/modal-config';
 import sidebarConfig from './objects/aside/sidebar-config';
+
+/**
+ * LOCALE OBJECTS
+ * Locale selector configuration and array member types.
+ */
+import localeSelectorItem from './objects/locale/locale-selector-item';
 
 /**
  * NAVIGATION OBJECTS
@@ -58,6 +65,7 @@ import internalButton from './objects/navigation/internal-button';
 import internalLink from './objects/navigation/internal-link';
 import link from './objects/navigation/link';
 import links from './objects/navigation/links';
+import utilityLinks from './objects/navigation/utility-links';
 import megaMenu from './objects/navigation/menus/mega-menu/mega-menu';
 import linkSection from './objects/navigation/menus/mega-menu/sections/link-section';
 import imageBlock from './objects/navigation/menus/mega-menu/sections/image-block';
@@ -116,7 +124,6 @@ import home from './singletons/home';
 import settings from './singletons/settings';
 import themeContent from './singletons/theme-content';
 import productSectionDesign from './singletons/product-section-design';
-import localeSelector from './singletons/locale-selector';
 
 /**
  * SCHEMA GROUPS
@@ -129,7 +136,6 @@ const singletons = [
   settings,
   themeContent,
   productSectionDesign,
-  localeSelector,
 ];
 
 const documents = [
@@ -168,7 +174,6 @@ const objects = [
   contentAlignment,
   contentPosition,
   footersList,
-  modalConfig,
   padding,
   productRichtext,
   rangeSlider,
@@ -179,7 +184,14 @@ const objects = [
   productSections,
   separatorLine,
   seo,
+
+  /* Aside */
+  dropdownConfig,
+  modalConfig,
   sidebarConfig,
+
+  /* Locale */
+  localeSelectorItem,
 
   /* Navigation */
   anchor,
@@ -189,6 +201,7 @@ const objects = [
   internalLink,
   link,
   links,
+  utilityLinks,
   megaMenu,
   linkSection,
   imageBlock,

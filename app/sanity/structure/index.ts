@@ -24,7 +24,6 @@ export const structure: StructureResolver = (S, context) => {
       // 🧩 ===== Global Layout =====
       singleton(S, SINGLETONS.header),
       singleton(S, SINGLETONS.footer),
-      singleton(S, SINGLETONS.localeSelector),
       S.divider(),
 
       // ⚙️ ===== Global Settings =====

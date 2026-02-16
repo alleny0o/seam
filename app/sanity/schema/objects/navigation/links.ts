@@ -6,5 +6,6 @@ export default defineField({
   of: [
     defineArrayMember({type: 'internalLink'}),
     defineArrayMember({type: 'externalLink'}),
+    defineArrayMember({type: 'localeSelectorItem'}),
   ],
 });

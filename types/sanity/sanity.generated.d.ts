@@ -13,43 +13,6 @@
  */
 
 // Source: schema.json
-export type LocaleSelector = {
-  _id: string;
-  _type: 'localeSelector';
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  triggerVariant?: 'icon' | 'flag' | 'flag-country' | 'flag-country-lang';
-  showChevron?: boolean;
-  displayModeKind?: 'single' | 'responsive';
-  mode?: 'dropdown' | 'modal' | 'sidebar';
-  modeBase?: 'dropdown' | 'modal' | 'sidebar';
-  modeSm?: 'dropdown' | 'modal' | 'sidebar';
-  modeMd?: 'dropdown' | 'modal' | 'sidebar';
-  modeLg?: 'dropdown' | 'modal' | 'sidebar';
-  sidebarConfig?: {
-    position?: 'left' | 'right';
-    width?: RangeSlider;
-    maxWidth?: RangeSlider;
-    fullWidthBelow?: 'never' | 'sm' | 'md' | 'lg';
-    animation?: 'none' | 'slide' | 'slideFade';
-    animationDuration?: RangeSlider;
-    overlayOpacity?: RangeSlider;
-  };
-  modalConfig?: {
-    insetX?: RangeSlider;
-    insetY?: RangeSlider;
-    maxWidth?: RangeSlider;
-    maxHeight?: RangeSlider;
-    fullScreenBelow?: 'never' | 'sm' | 'md' | 'lg';
-    borderRadiusOnFullScreen?: 'keep' | 'none';
-    borderRadius?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
-    animation?: 'none' | 'fade' | 'scale' | 'slideTop' | 'slideBottom';
-    animationDuration?: RangeSlider;
-    overlayOpacity?: RangeSlider;
-  };
-};
-
 export type ProductSectionDesign = {
   _id: string;
   _type: 'productSectionDesign';
@@ -480,7 +443,13 @@ export type Header = {
     _weak?: boolean;
     [internalGroqTypeReferenceTo]?: 'colorScheme';
   };
+  desktopMegaMenuPadding?: Padding;
+  desktopMegaMenuSeparatorLine?: SeparatorLine;
   desktopMegaMenuHeadingTypography?: FontStyleOverride;
+  desktopMegaMenuLinkTypography?: FontStyleOverride;
+  desktopMegaMenuImageBlockHeadingTypography?: FontStyleOverride;
+  desktopMegaMenuImageBlockDescriptionTypography?: FontStyleOverride;
+  desktopMegaMenuCTATypography?: FontStyleOverride;
   desktopMegaMenuHeadingHoverEffect?:
     | 'none'
     | 'underline'
@@ -488,7 +457,6 @@ export type Header = {
     | 'color'
     | 'background'
     | 'scale';
-  desktopMegaMenuLinkTypography?: FontStyleOverride;
   desktopMegaMenuLinkHoverEffect?:
     | 'none'
     | 'underline'
@@ -496,11 +464,6 @@ export type Header = {
     | 'color'
     | 'background'
     | 'scale';
-  desktopMegaMenuImageBlockHeadingTypography?: FontStyleOverride;
-  desktopMegaMenuImageBlockDescriptionTypography?: FontStyleOverride;
-  desktopMegaMenuCTATypography?: FontStyleOverride;
-  desktopMegaMenuPadding?: Padding;
-  desktopMegaMenuSeparatorLine?: SeparatorLine;
   desktopMegaMenuBehavior?: 'hover' | 'click';
   desktopAllowMegaMenuParentLinks?: boolean;
   desktopMegaMenuDisableScroll?: boolean;
@@ -533,11 +496,18 @@ export type Header = {
   mobileMegaMenuLinkBackgroundProperty?: 'background' | 'card' | 'primary';
   mobileNavigationSeparatorLine?: SeparatorLine;
   announcementBar?: InternationalizedArrayAnnouncementBar;
+  announcementBarUtilityLinks?: InternationalizedArrayLinks;
+  announcementBarColorScheme?: {
+    _ref: string;
+    _type: 'reference';
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: 'colorScheme';
+  };
+  announcementBarPadding?: Padding;
   announcementBarTypography?: FontStyleOverride;
-  utilityLinks?: InternationalizedArrayLinks;
   utilityLinksTypography?: FontStyleOverride;
-  fadeTransition?: boolean;
   autoRotateAnnouncements?: boolean;
+  fadeTransition?: boolean;
   showAnnouncementArrows?: boolean;
   announcementArrowSize?: RangeSlider;
   announcementArrowStrokeWidth?: RangeSlider;
@@ -553,19 +523,12 @@ export type Header = {
   };
   blur?: boolean;
   separatorLine?: SeparatorLine;
-  announcementBarColorScheme?: {
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: 'colorScheme';
-  };
-  announcementBarPadding?: Padding;
   showLocalizationSelector?: boolean;
   showWishlist?: boolean;
   accountStyleDesktop?: 'icon' | 'text';
-  actionsTypography?: FontStyleOverride;
   cartStyleDesktop?: 'icon' | 'text';
   cartStyleMobile?: 'icon' | 'text';
+  actionsTypography?: FontStyleOverride;
   sticky?: 'none' | 'onScrollUp' | 'always';
 };
 
@@ -581,17 +544,17 @@ export type FontStyleOverride = {
   capitalize?: boolean;
 };
 
-export type Padding = {
-  _type: 'padding';
-  top?: RangeSlider;
-  bottom?: RangeSlider;
-};
-
 export type SeparatorLine = {
   _type: 'separatorLine';
   show?: boolean;
   opacity?: RangeSlider;
   height?: RangeSlider;
+};
+
+export type Padding = {
+  _type: 'padding';
+  top?: RangeSlider;
+  bottom?: RangeSlider;
 };
 
 export type InternationalizedArrayLinks = Array<
@@ -1127,6 +1090,18 @@ export type MegaMenu = {
   >;
 };
 
+export type UtilityLinks = Array<
+  | ({
+      _key: string;
+    } & InternalLink)
+  | ({
+      _key: string;
+    } & ExternalLink)
+  | ({
+      _key: string;
+    } & LocaleSelectorItem)
+>;
+
 export type Links = Array<
   | ({
       _key: string;
@@ -1134,6 +1109,9 @@ export type Links = Array<
   | ({
       _key: string;
     } & ExternalLink)
+  | ({
+      _key: string;
+    } & LocaleSelectorItem)
 >;
 
 export type Link =
@@ -1202,6 +1180,19 @@ export type ExternalLink = {
 };
 
 export type Anchor = string;
+
+export type LocaleSelectorItem = {
+  _type: 'localeSelectorItem';
+  triggerVariant?: string;
+};
+
+export type DropdownConfig = {
+  _type: 'dropdownConfig';
+  borderRadius?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
+  shadow?: 'none' | 'sm' | 'md' | 'lg';
+  showBorder?: boolean;
+  borderWidth?: RangeSlider;
+};
 
 export type Seo = {
   _type: 'seo';
@@ -1461,6 +1452,11 @@ export type AnnouncementBar = Array<{
   _key: string;
 }>;
 
+export type InternationalizedArrayUtilityLinksValue = {
+  _type: 'internationalizedArrayUtilityLinksValue';
+  value?: UtilityLinks;
+};
+
 export type InternationalizedArrayLinksValue = {
   _type: 'internationalizedArrayLinksValue';
   value?: Links;
@@ -1510,6 +1506,12 @@ export type InternationalizedArrayStringValue = {
   _type: 'internationalizedArrayStringValue';
   value?: string;
 };
+
+export type InternationalizedArrayUtilityLinks = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayUtilityLinksValue
+>;
 
 export type InternationalizedArrayLink = Array<
   {
@@ -1758,7 +1760,6 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
-  | LocaleSelector
   | ProductSectionDesign
   | RangeSlider
   | ThemeContent
@@ -1772,8 +1773,8 @@ export type AllSanitySchemaTypes =
   | Sections
   | Header
   | FontStyleOverride
-  | Padding
   | SeparatorLine
+  | Padding
   | InternationalizedArrayLinks
   | InternationalizedArrayAnnouncementBar
   | ModalConfig
@@ -1807,6 +1808,7 @@ export type AllSanitySchemaTypes =
   | ImageBlock
   | LinkSection
   | MegaMenu
+  | UtilityLinks
   | Links
   | Link
   | InternalLink
@@ -1814,6 +1816,8 @@ export type AllSanitySchemaTypes =
   | HeaderNavigation
   | ExternalLink
   | Anchor
+  | LocaleSelectorItem
+  | DropdownConfig
   | Seo
   | ProductSections
   | CollectionSections
@@ -1826,6 +1830,7 @@ export type AllSanitySchemaTypes =
   | ContentAlignment
   | BannerRichtext
   | AnnouncementBar
+  | InternationalizedArrayUtilityLinksValue
   | InternationalizedArrayLinksValue
   | InternationalizedArrayLinkValue
   | InternationalizedArrayBannerRichtextValue
@@ -1836,6 +1841,7 @@ export type AllSanitySchemaTypes =
   | InternationalizedArraySlugValue
   | InternationalizedArrayTextValue
   | InternationalizedArrayStringValue
+  | InternationalizedArrayUtilityLinks
   | InternationalizedArrayLink
   | InternationalizedArrayBannerRichtext
   | InternationalizedArrayRichtext
@@ -6162,52 +6168,7 @@ export type ROOT_QUERYResult = {
       openInNewTab: boolean | null;
       text: string | null;
     }> | null;
-    utilityLinks: Array<
-      | {
-          _key: string;
-          _type: 'externalLink';
-          link: string | null;
-          name: string | null;
-          openInNewTab: boolean | null;
-        }
-      | {
-          _key: string;
-          _type: 'internalLink';
-          anchor: Anchor | null;
-          link:
-            | {
-                documentType: 'blogPost';
-                slug: null;
-              }
-            | {
-                documentType: 'collection';
-                slug: {
-                  _type: 'slug';
-                  current: string | null;
-                } | null;
-              }
-            | {
-                documentType: 'home';
-                slug: null;
-              }
-            | {
-                documentType: 'page';
-                slug: {
-                  _type: 'slug';
-                  current: string | null;
-                } | null;
-              }
-            | {
-                documentType: 'product';
-                slug: {
-                  _type: 'slug';
-                  current: string | null;
-                } | null;
-              }
-            | null;
-          name: string | null;
-        }
-    > | null;
+    utilityLinks: null;
     announcementBarColorScheme: {
       background: {
         alpha: null;
@@ -8753,42 +8714,7 @@ export type ROOT_QUERYResult = {
     mediaInteraction: 'lightbox' | 'none' | 'zoom' | null;
     showDots: boolean | null;
   } | null;
-  localeSelector: {
-    triggerVariant:
-      | 'flag-country-lang'
-      | 'flag-country'
-      | 'flag'
-      | 'icon'
-      | null;
-    showChevron: boolean | null;
-    displayModeKind: 'responsive' | 'single' | null;
-    mode: 'dropdown' | 'modal' | 'sidebar' | null;
-    modeBase: 'dropdown' | 'modal' | 'sidebar' | null;
-    modeSm: 'dropdown' | 'modal' | 'sidebar' | null;
-    modeMd: 'dropdown' | 'modal' | 'sidebar' | null;
-    modeLg: 'dropdown' | 'modal' | 'sidebar' | null;
-    sidebarConfig: {
-      position: 'left' | 'right' | null;
-      width: RangeSlider | null;
-      maxWidth: RangeSlider | null;
-      fullWidthBelow: 'lg' | 'md' | 'never' | 'sm' | null;
-      animation: 'none' | 'slide' | 'slideFade' | null;
-      animationDuration: RangeSlider | null;
-      overlayOpacity: RangeSlider | null;
-    } | null;
-    modalConfig: {
-      insetX: RangeSlider | null;
-      insetY: RangeSlider | null;
-      maxWidth: RangeSlider | null;
-      maxHeight: RangeSlider | null;
-      fullScreenBelow: 'lg' | 'md' | 'never' | 'sm' | null;
-      borderRadius: 'lg' | 'md' | 'none' | 'sm' | 'xl' | null;
-      borderRadiusOnFullScreen: 'keep' | 'none' | null;
-      animation: 'fade' | 'none' | 'scale' | 'slideBottom' | 'slideTop' | null;
-      animationDuration: RangeSlider | null;
-      overlayOpacity: RangeSlider | null;
-    } | null;
-  } | null;
+  localeSelector: null;
 };
 // Variable: COLLECTION_QUERY
 // Query: {  '_type': 'collection',  "collection": *[_type == "collection" && store.slug.current == $collectionHandle][0] {    store {      gid,    },    template -> {      sections[] {        _key,        _type,            _type == 'richtextSection' => {  _key,  _type,  contentAlignment,  desktopContentPosition,  maxWidth,  "richtext": coalesce(    richtext[_key == $language][0].value[] {  ...,  _type == 'image' => {  _type,  asset,  "altText": asset -> altText,  "_ref": asset._ref,  hotspot,  crop,},  _type == 'button' => {    ...,    link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  },  _type == 'block' => {    ...,    markDefs[] {      ...,      _type == 'internalLink' => {  _key,  _type,  anchor,  link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  name,},      _type == 'externalLink' => {  _key,  _type,  link,  name,  openInNewTab,},    }  }},    richtext[_key == $defaultLanguage][0].value[] {  ...,  _type == 'image' => {  _type,  asset,  "altText": asset -> altText,  "_ref": asset._ref,  hotspot,  crop,},  _type == 'button' => {    ...,    link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  },  _type == 'block' => {    ...,    markDefs[] {      ...,      _type == 'internalLink' => {  _key,  _type,  anchor,  link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  name,},      _type == 'externalLink' => {  _key,  _type,  link,  name,  openInNewTab,},    }  }},  )[],  settings {  colorScheme -> {  background {  alpha,  hex,  hsl,  rgb,},  border {  alpha,  hex,  hsl,  rgb,},  card {  alpha,  hex,  hsl,  rgb,},  cardForeground {  alpha,  hex,  hsl,  rgb,},  foreground {  alpha,  hex,  hsl,  rgb,},  primary {  alpha,  hex,  hsl,  rgb,},  primaryForeground {  alpha,  hex,  hsl,  rgb,},},  customCss,  hide,  padding}},    _type == 'carouselSection' => {  _key,  _type,  arrows,  autoplay,  "title": coalesce(    title[_key == $language][0].value,    title[_key == $defaultLanguage][0].value,  ),  loop,  pagination,  slides[] {    _key,    image {  _type,  asset,  "altText": asset -> altText,  "_ref": asset._ref,  hotspot,  crop,},  },  slidesPerViewDesktop,  settings {  colorScheme -> {  background {  alpha,  hex,  hsl,  rgb,},  border {  alpha,  hex,  hsl,  rgb,},  card {  alpha,  hex,  hsl,  rgb,},  cardForeground {  alpha,  hex,  hsl,  rgb,},  foreground {  alpha,  hex,  hsl,  rgb,},  primary {  alpha,  hex,  hsl,  rgb,},  primaryForeground {  alpha,  hex,  hsl,  rgb,},},  customCss,  hide,  padding}},    _type == 'collectionListSection' => {  _key,  _type,  collections[] -> {    store {      gid    }  },  desktopColumns,  settings {  colorScheme -> {  background {  alpha,  hex,  hsl,  rgb,},  border {  alpha,  hex,  hsl,  rgb,},  card {  alpha,  hex,  hsl,  rgb,},  cardForeground {  alpha,  hex,  hsl,  rgb,},  foreground {  alpha,  hex,  hsl,  rgb,},  primary {  alpha,  hex,  hsl,  rgb,},  primaryForeground {  alpha,  hex,  hsl,  rgb,},},  customCss,  hide,  padding}},    _type == 'featuredProductSection' => {  _key,  _type,  mediaAspectRatio,  product -> {    store {      descriptionHtml,      "firstVariant": variants[0] -> {        store {          gid,          previewImageUrl,          price        }      },      gid,      options[] {        name,        values      },      previewImageUrl,      title    }  },  'richtext': coalesce(    richtext[_key == $language][0].value[] {  ...,  _type == 'image' => {  _type,  asset,  "altText": asset -> altText,  "_ref": asset._ref,  hotspot,  crop,},  _type == 'button' => {    ...,    link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  },  _type == 'block' => {    ...,    markDefs[] {      ...,      _type == 'internalLink' => {  _key,  _type,  anchor,  link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  name,},      _type == 'externalLink' => {  _key,  _type,  link,  name,  openInNewTab,},    }  }},    richtext[_key == $defaultLanguage][0].value[] {  ...,  _type == 'image' => {  _type,  asset,  "altText": asset -> altText,  "_ref": asset._ref,  hotspot,  crop,},  _type == 'button' => {    ...,    link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  },  _type == 'block' => {    ...,    markDefs[] {      ...,      _type == 'internalLink' => {  _key,  _type,  anchor,  link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  name,},      _type == 'externalLink' => {  _key,  _type,  link,  name,  openInNewTab,},    }  }},  )[],  settings {  colorScheme -> {  background {  alpha,  hex,  hsl,  rgb,},  border {  alpha,  hex,  hsl,  rgb,},  card {  alpha,  hex,  hsl,  rgb,},  cardForeground {  alpha,  hex,  hsl,  rgb,},  foreground {  alpha,  hex,  hsl,  rgb,},  primary {  alpha,  hex,  hsl,  rgb,},  primaryForeground {  alpha,  hex,  hsl,  rgb,},},  customCss,  hide,  padding}},    _type == 'featuredCollectionSection' => {  _key,  _type,  collection -> {    store {      gid,      slug,      title    }  },  desktopColumns,  "heading": coalesce(    heading[_key == $language][0].value,    heading[_key == $defaultLanguage][0].value,  ),  maxProducts,  settings {  colorScheme -> {  background {  alpha,  hex,  hsl,  rgb,},  border {  alpha,  hex,  hsl,  rgb,},  card {  alpha,  hex,  hsl,  rgb,},  cardForeground {  alpha,  hex,  hsl,  rgb,},  foreground {  alpha,  hex,  hsl,  rgb,},  primary {  alpha,  hex,  hsl,  rgb,},  primaryForeground {  alpha,  hex,  hsl,  rgb,},},  customCss,  hide,  padding},  viewAll},    _type == 'imageBannerSection' => {  _key,  _type,  backgroundImage {  _type,  asset,  "altText": asset -> altText,  "_ref": asset._ref,  hotspot,  crop,},  bannerHeight,  "content": coalesce(    content[_key == $language][0].value[] {  ...,  _type == 'image' => {  _type,  asset,  "altText": asset -> altText,  "_ref": asset._ref,  hotspot,  crop,},  _type == 'button' => {    ...,    link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  },  _type == 'block' => {    ...,    markDefs[] {      ...,      _type == 'internalLink' => {  _key,  _type,  anchor,  link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  name,},      _type == 'externalLink' => {  _key,  _type,  link,  name,  openInNewTab,},    }  }},    content[_key == $defaultLanguage][0].value[] {  ...,  _type == 'image' => {  _type,  asset,  "altText": asset -> altText,  "_ref": asset._ref,  hotspot,  crop,},  _type == 'button' => {    ...,    link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  },  _type == 'block' => {    ...,    markDefs[] {      ...,      _type == 'internalLink' => {  _key,  _type,  anchor,  link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  name,},      _type == 'externalLink' => {  _key,  _type,  link,  name,  openInNewTab,},    }  }},  )[],  contentAlignment,  contentPosition,  overlayOpacity,  settings {  colorScheme -> {  background {  alpha,  hex,  hsl,  rgb,},  border {  alpha,  hex,  hsl,  rgb,},  card {  alpha,  hex,  hsl,  rgb,},  cardForeground {  alpha,  hex,  hsl,  rgb,},  foreground {  alpha,  hex,  hsl,  rgb,},  primary {  alpha,  hex,  hsl,  rgb,},  primaryForeground {  alpha,  hex,  hsl,  rgb,},},  customCss,  hide,  padding}},              _type == 'collectionBannerSection' => {  _key,  _type,  bannerHeight,  contentAlignment,  contentPosition,  overlayOpacity,  showDescription,  showImage,  settings {  colorScheme -> {  background {  alpha,  hex,  hsl,  rgb,},  border {  alpha,  hex,  hsl,  rgb,},  card {  alpha,  hex,  hsl,  rgb,},  cardForeground {  alpha,  hex,  hsl,  rgb,},  foreground {  alpha,  hex,  hsl,  rgb,},  primary {  alpha,  hex,  hsl,  rgb,},  primaryForeground {  alpha,  hex,  hsl,  rgb,},},  customCss,  hide,  padding}},    _type == 'collectionProductGridSection' => {  _key,  _type,  desktopColumns,  enableFiltering,  enableSorting,  mobileColumns,  productsPerPage,  settings {  colorScheme -> {  background {  alpha,  hex,  hsl,  rgb,},  border {  alpha,  hex,  hsl,  rgb,},  card {  alpha,  hex,  hsl,  rgb,},  cardForeground {  alpha,  hex,  hsl,  rgb,},  foreground {  alpha,  hex,  hsl,  rgb,},  primary {  alpha,  hex,  hsl,  rgb,},  primaryForeground {  alpha,  hex,  hsl,  rgb,},},  customCss,  hide,  padding}},        },    },  },  "defaultCollectionTemplate": *[_type == 'collectionTemplate' && default == true][0] {    _type,    name,    sections[] {      _key,      _type,          _type == 'richtextSection' => {  _key,  _type,  contentAlignment,  desktopContentPosition,  maxWidth,  "richtext": coalesce(    richtext[_key == $language][0].value[] {  ...,  _type == 'image' => {  _type,  asset,  "altText": asset -> altText,  "_ref": asset._ref,  hotspot,  crop,},  _type == 'button' => {    ...,    link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  },  _type == 'block' => {    ...,    markDefs[] {      ...,      _type == 'internalLink' => {  _key,  _type,  anchor,  link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  name,},      _type == 'externalLink' => {  _key,  _type,  link,  name,  openInNewTab,},    }  }},    richtext[_key == $defaultLanguage][0].value[] {  ...,  _type == 'image' => {  _type,  asset,  "altText": asset -> altText,  "_ref": asset._ref,  hotspot,  crop,},  _type == 'button' => {    ...,    link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  },  _type == 'block' => {    ...,    markDefs[] {      ...,      _type == 'internalLink' => {  _key,  _type,  anchor,  link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  name,},      _type == 'externalLink' => {  _key,  _type,  link,  name,  openInNewTab,},    }  }},  )[],  settings {  colorScheme -> {  background {  alpha,  hex,  hsl,  rgb,},  border {  alpha,  hex,  hsl,  rgb,},  card {  alpha,  hex,  hsl,  rgb,},  cardForeground {  alpha,  hex,  hsl,  rgb,},  foreground {  alpha,  hex,  hsl,  rgb,},  primary {  alpha,  hex,  hsl,  rgb,},  primaryForeground {  alpha,  hex,  hsl,  rgb,},},  customCss,  hide,  padding}},    _type == 'carouselSection' => {  _key,  _type,  arrows,  autoplay,  "title": coalesce(    title[_key == $language][0].value,    title[_key == $defaultLanguage][0].value,  ),  loop,  pagination,  slides[] {    _key,    image {  _type,  asset,  "altText": asset -> altText,  "_ref": asset._ref,  hotspot,  crop,},  },  slidesPerViewDesktop,  settings {  colorScheme -> {  background {  alpha,  hex,  hsl,  rgb,},  border {  alpha,  hex,  hsl,  rgb,},  card {  alpha,  hex,  hsl,  rgb,},  cardForeground {  alpha,  hex,  hsl,  rgb,},  foreground {  alpha,  hex,  hsl,  rgb,},  primary {  alpha,  hex,  hsl,  rgb,},  primaryForeground {  alpha,  hex,  hsl,  rgb,},},  customCss,  hide,  padding}},    _type == 'collectionListSection' => {  _key,  _type,  collections[] -> {    store {      gid    }  },  desktopColumns,  settings {  colorScheme -> {  background {  alpha,  hex,  hsl,  rgb,},  border {  alpha,  hex,  hsl,  rgb,},  card {  alpha,  hex,  hsl,  rgb,},  cardForeground {  alpha,  hex,  hsl,  rgb,},  foreground {  alpha,  hex,  hsl,  rgb,},  primary {  alpha,  hex,  hsl,  rgb,},  primaryForeground {  alpha,  hex,  hsl,  rgb,},},  customCss,  hide,  padding}},    _type == 'featuredProductSection' => {  _key,  _type,  mediaAspectRatio,  product -> {    store {      descriptionHtml,      "firstVariant": variants[0] -> {        store {          gid,          previewImageUrl,          price        }      },      gid,      options[] {        name,        values      },      previewImageUrl,      title    }  },  'richtext': coalesce(    richtext[_key == $language][0].value[] {  ...,  _type == 'image' => {  _type,  asset,  "altText": asset -> altText,  "_ref": asset._ref,  hotspot,  crop,},  _type == 'button' => {    ...,    link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  },  _type == 'block' => {    ...,    markDefs[] {      ...,      _type == 'internalLink' => {  _key,  _type,  anchor,  link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  name,},      _type == 'externalLink' => {  _key,  _type,  link,  name,  openInNewTab,},    }  }},    richtext[_key == $defaultLanguage][0].value[] {  ...,  _type == 'image' => {  _type,  asset,  "altText": asset -> altText,  "_ref": asset._ref,  hotspot,  crop,},  _type == 'button' => {    ...,    link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  },  _type == 'block' => {    ...,    markDefs[] {      ...,      _type == 'internalLink' => {  _key,  _type,  anchor,  link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  name,},      _type == 'externalLink' => {  _key,  _type,  link,  name,  openInNewTab,},    }  }},  )[],  settings {  colorScheme -> {  background {  alpha,  hex,  hsl,  rgb,},  border {  alpha,  hex,  hsl,  rgb,},  card {  alpha,  hex,  hsl,  rgb,},  cardForeground {  alpha,  hex,  hsl,  rgb,},  foreground {  alpha,  hex,  hsl,  rgb,},  primary {  alpha,  hex,  hsl,  rgb,},  primaryForeground {  alpha,  hex,  hsl,  rgb,},},  customCss,  hide,  padding}},    _type == 'featuredCollectionSection' => {  _key,  _type,  collection -> {    store {      gid,      slug,      title    }  },  desktopColumns,  "heading": coalesce(    heading[_key == $language][0].value,    heading[_key == $defaultLanguage][0].value,  ),  maxProducts,  settings {  colorScheme -> {  background {  alpha,  hex,  hsl,  rgb,},  border {  alpha,  hex,  hsl,  rgb,},  card {  alpha,  hex,  hsl,  rgb,},  cardForeground {  alpha,  hex,  hsl,  rgb,},  foreground {  alpha,  hex,  hsl,  rgb,},  primary {  alpha,  hex,  hsl,  rgb,},  primaryForeground {  alpha,  hex,  hsl,  rgb,},},  customCss,  hide,  padding},  viewAll},    _type == 'imageBannerSection' => {  _key,  _type,  backgroundImage {  _type,  asset,  "altText": asset -> altText,  "_ref": asset._ref,  hotspot,  crop,},  bannerHeight,  "content": coalesce(    content[_key == $language][0].value[] {  ...,  _type == 'image' => {  _type,  asset,  "altText": asset -> altText,  "_ref": asset._ref,  hotspot,  crop,},  _type == 'button' => {    ...,    link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  },  _type == 'block' => {    ...,    markDefs[] {      ...,      _type == 'internalLink' => {  _key,  _type,  anchor,  link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  name,},      _type == 'externalLink' => {  _key,  _type,  link,  name,  openInNewTab,},    }  }},    content[_key == $defaultLanguage][0].value[] {  ...,  _type == 'image' => {  _type,  asset,  "altText": asset -> altText,  "_ref": asset._ref,  hotspot,  crop,},  _type == 'button' => {    ...,    link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  },  _type == 'block' => {    ...,    markDefs[] {      ...,      _type == 'internalLink' => {  _key,  _type,  anchor,  link -> {  'documentType': _type,  'slug': coalesce(    slug,    store.slug  ) {    _type,    current  },},  name,},      _type == 'externalLink' => {  _key,  _type,  link,  name,  openInNewTab,},    }  }},  )[],  contentAlignment,  contentPosition,  overlayOpacity,  settings {  colorScheme -> {  background {  alpha,  hex,  hsl,  rgb,},  border {  alpha,  hex,  hsl,  rgb,},  card {  alpha,  hex,  hsl,  rgb,},  cardForeground {  alpha,  hex,  hsl,  rgb,},  foreground {  alpha,  hex,  hsl,  rgb,},  primary {  alpha,  hex,  hsl,  rgb,},  primaryForeground {  alpha,  hex,  hsl,  rgb,},},  customCss,  hide,  padding}},            _type == 'collectionBannerSection' => {  _key,  _type,  bannerHeight,  contentAlignment,  contentPosition,  overlayOpacity,  showDescription,  showImage,  settings {  colorScheme -> {  background {  alpha,  hex,  hsl,  rgb,},  border {  alpha,  hex,  hsl,  rgb,},  card {  alpha,  hex,  hsl,  rgb,},  cardForeground {  alpha,  hex,  hsl,  rgb,},  foreground {  alpha,  hex,  hsl,  rgb,},  primary {  alpha,  hex,  hsl,  rgb,},  primaryForeground {  alpha,  hex,  hsl,  rgb,},},  customCss,  hide,  padding}},    _type == 'collectionProductGridSection' => {  _key,  _type,  desktopColumns,  enableFiltering,  enableSorting,  mobileColumns,  productsPerPage,  settings {  colorScheme -> {  background {  alpha,  hex,  hsl,  rgb,},  border {  alpha,  hex,  hsl,  rgb,},  card {  alpha,  hex,  hsl,  rgb,},  cardForeground {  alpha,  hex,  hsl,  rgb,},  foreground {  alpha,  hex,  hsl,  rgb,},  primary {  alpha,  hex,  hsl,  rgb,},  primaryForeground {  alpha,  hex,  hsl,  rgb,},},  customCss,  hide,  padding}},      },  },}

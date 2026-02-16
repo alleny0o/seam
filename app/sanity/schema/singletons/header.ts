@@ -2,8 +2,8 @@ import {defineField, defineType} from 'sanity';
 
 /**
  * GROUPS
- * Professional grouping structure for the header schema.
- * Desktop and mobile are now clearly separated.
+ * Each group maps to a top-level tab in the Sanity studio editor.
+ * Order here controls the order of tabs in the UI.
  */
 const GROUPS = [
   {name: 'navigation', title: 'Navigation', default: true},
@@ -24,36 +24,32 @@ export default defineType({
   groups: GROUPS,
 
   fields: [
-    /**
-     * ============================================================================
-     * NAVIGATION
-     * Menu structure shared across desktop and mobile.
-     * ============================================================================
-     */
+    // ============================================================================
+    // NAVIGATION
+    // Menu structure shared across desktop and mobile.
+    // ============================================================================
     defineField({
       name: 'menu',
       title: 'Menu',
-      group: 'navigation',
       type: 'internationalizedArrayHeaderNavigation',
+      group: 'navigation',
       description: 'Navigation structure used for both desktop and mobile',
     }),
 
-    /**
-     * ============================================================================
-     * DESKTOP NAVIGATION
-     * Desktop navigation link styling.
-     * ============================================================================
-     */
+    // ============================================================================
+    // DESKTOP NAVIGATION
+    // Link styling and hover effects for the top-level desktop nav bar.
+    // ============================================================================
     defineField({
       name: 'desktopNavigationTypography',
-      title: 'Desktop navigation typography',
+      title: 'Typography',
       type: 'fontStyleOverride',
       group: 'desktopNavigation',
       description: 'Typography for desktop navigation links',
     }),
     defineField({
       name: 'desktopMenuItemPaddingX',
-      title: 'Desktop menu item horizontal padding',
+      title: 'Item horizontal padding',
       type: 'rangeSlider',
       group: 'desktopNavigation',
       options: {min: 0, max: 30, suffix: 'px'},
@@ -61,7 +57,7 @@ export default defineType({
     }),
     defineField({
       name: 'desktopMenuItemPaddingY',
-      title: 'Desktop menu item vertical padding',
+      title: 'Item vertical padding',
       type: 'rangeSlider',
       group: 'desktopNavigation',
       options: {min: 0, max: 30, suffix: 'px'},
@@ -69,7 +65,7 @@ export default defineType({
     }),
     defineField({
       name: 'desktopNavigationHoverEffect',
-      title: 'Navigation link hover effect',
+      title: 'Link hover effect',
       type: 'string',
       group: 'desktopNavigation',
       description: 'Hover animation for desktop navigation links',
@@ -87,111 +83,118 @@ export default defineType({
       initialValue: 'none',
     }),
 
-    /**
-     * ============================================================================
-     * DESKTOP MEGA MENU
-     * Desktop mega menu appearance, behavior, and animations.
-     * ============================================================================
-     */
+    // ============================================================================
+    // DESKTOP MEGA MENU
+    // Appearance, typography, behavior, and animation for the desktop mega menu.
+    // ============================================================================
+
+    // — Appearance —
     defineField({
       name: 'desktopMegaMenuColorScheme',
-      title: 'Desktop mega menu color scheme',
+      title: 'Color scheme',
       type: 'reference',
       to: [{type: 'colorScheme'}],
       group: 'desktopMegaMenu',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'desktopMegaMenuHeadingTypography',
-      title: 'Desktop mega menu heading typography',
-      type: 'fontStyleOverride',
+      name: 'desktopMegaMenuPadding',
+      title: 'Padding',
+      type: 'padding',
       group: 'desktopMegaMenu',
-      description: 'Typography for desktop mega menu section headings',
     }),
     defineField({
-      name: 'desktopMegaMenuHeadingHoverEffect',
-      title: 'Heading link hover effect',
-      type: 'string',
+      name: 'desktopMegaMenuSeparatorLine',
+      title: 'Separator line',
+      type: 'separatorLine',
       group: 'desktopMegaMenu',
-      description: 'Hover animation for mega menu heading links',
-      options: {
-        list: [
-          {title: 'None', value: 'none'},
-          {title: 'Underline (Animated)', value: 'underline'},
-          {title: 'Underline (Instant)', value: 'underlineInstant'},
-          {title: 'Color Change', value: 'color'},
-          {title: 'Background Fill', value: 'background'},
-          {title: 'Scale', value: 'scale'},
-        ],
-        layout: 'dropdown',
-      },
-      initialValue: 'none',
+      description: 'Separator between the header and the open mega menu',
+    }),
+
+    // — Typography —
+    defineField({
+      name: 'desktopMegaMenuHeadingTypography',
+      title: 'Section heading typography',
+      type: 'fontStyleOverride',
+      group: 'desktopMegaMenu',
+      description: 'Typography for mega menu section headings',
     }),
     defineField({
       name: 'desktopMegaMenuLinkTypography',
-      title: 'Desktop mega menu link typography',
+      title: 'Link typography',
       type: 'fontStyleOverride',
       group: 'desktopMegaMenu',
-      description: 'Typography for desktop mega menu links',
-    }),
-    defineField({
-      name: 'desktopMegaMenuLinkHoverEffect',
-      title: 'Sublink hover effect',
-      type: 'string',
-      group: 'desktopMegaMenu',
-      description: 'Hover animation for mega menu sublinks',
-      options: {
-        list: [
-          {title: 'None', value: 'none'},
-          {title: 'Underline (Animated)', value: 'underline'},
-          {title: 'Underline (Instant)', value: 'underlineInstant'},
-          {title: 'Color Change', value: 'color'},
-          {title: 'Background Fill', value: 'background'},
-          {title: 'Scale', value: 'scale'},
-        ],
-        layout: 'dropdown',
-      },
-      initialValue: 'none',
+      description: 'Typography for mega menu links',
     }),
     defineField({
       name: 'desktopMegaMenuImageBlockHeadingTypography',
-      title: 'Desktop mega menu image block heading typography',
+      title: 'Image block heading typography',
       type: 'fontStyleOverride',
       group: 'desktopMegaMenu',
       description: 'Typography for image block headings',
     }),
     defineField({
       name: 'desktopMegaMenuImageBlockDescriptionTypography',
-      title: 'Desktop mega menu image block description typography',
+      title: 'Image block description typography',
       type: 'fontStyleOverride',
       group: 'desktopMegaMenu',
       description: 'Typography for image block descriptions',
     }),
     defineField({
       name: 'desktopMegaMenuCTATypography',
-      title: 'Desktop mega menu CTA typography',
+      title: 'CTA typography',
       type: 'fontStyleOverride',
       group: 'desktopMegaMenu',
       description: 'Typography for CTA buttons in image blocks',
     }),
+
+    // — Hover effects —
     defineField({
-      name: 'desktopMegaMenuPadding',
-      title: 'Desktop mega menu padding',
-      type: 'padding',
-      group: 'desktopMegaMenu',
-    }),
-    defineField({
-      name: 'desktopMegaMenuSeparatorLine',
-      title: 'Desktop mega menu separator line',
-      type: 'separatorLine',
-      group: 'desktopMegaMenu',
-      description: 'Separator between desktop mega menu and content',
-    }),
-    defineField({
-      name: 'desktopMegaMenuBehavior',
-      title: 'Desktop mega menu interaction',
+      name: 'desktopMegaMenuHeadingHoverEffect',
+      title: 'Section heading hover effect',
       type: 'string',
       group: 'desktopMegaMenu',
+      description: 'Hover animation for mega menu section heading links',
+      options: {
+        list: [
+          {title: 'None', value: 'none'},
+          {title: 'Underline (Animated)', value: 'underline'},
+          {title: 'Underline (Instant)', value: 'underlineInstant'},
+          {title: 'Color Change', value: 'color'},
+          {title: 'Background Fill', value: 'background'},
+          {title: 'Scale', value: 'scale'},
+        ],
+        layout: 'dropdown',
+      },
+      initialValue: 'none',
+    }),
+    defineField({
+      name: 'desktopMegaMenuLinkHoverEffect',
+      title: 'Link hover effect',
+      type: 'string',
+      group: 'desktopMegaMenu',
+      description: 'Hover animation for mega menu links',
+      options: {
+        list: [
+          {title: 'None', value: 'none'},
+          {title: 'Underline (Animated)', value: 'underline'},
+          {title: 'Underline (Instant)', value: 'underlineInstant'},
+          {title: 'Color Change', value: 'color'},
+          {title: 'Background Fill', value: 'background'},
+          {title: 'Scale', value: 'scale'},
+        ],
+        layout: 'dropdown',
+      },
+      initialValue: 'none',
+    }),
+
+    // — Behavior —
+    defineField({
+      name: 'desktopMegaMenuBehavior',
+      title: 'Open interaction',
+      type: 'string',
+      group: 'desktopMegaMenu',
+      description: 'How desktop mega menus open. Touch devices always use tap.',
       options: {
         list: [
           {title: 'Hover to open (Traditional)', value: 'hover'},
@@ -200,11 +203,10 @@ export default defineType({
         layout: 'radio',
       },
       initialValue: 'hover',
-      description: 'How desktop mega menus open. Touch devices always use tap.',
     }),
     defineField({
       name: 'desktopAllowMegaMenuParentLinks',
-      title: 'Allow parent navigation links (desktop)',
+      title: 'Allow parent navigation links',
       type: 'boolean',
       group: 'desktopMegaMenu',
       initialValue: true,
@@ -213,30 +215,34 @@ export default defineType({
     }),
     defineField({
       name: 'desktopMegaMenuDisableScroll',
-      title: 'Disable scroll when desktop mega menu is open',
+      title: 'Disable page scroll when open',
       type: 'boolean',
       group: 'desktopMegaMenu',
       initialValue: false,
     }),
+
+    // — Overlay —
     defineField({
       name: 'desktopMegaMenuShowOverlay',
-      title: 'Show overlay when desktop mega menu is open',
+      title: 'Show overlay when open',
       type: 'boolean',
       group: 'desktopMegaMenu',
       initialValue: false,
     }),
     defineField({
       name: 'desktopMegaMenuOverlayOpacity',
-      title: 'Desktop mega menu overlay opacity',
+      title: 'Overlay opacity',
       type: 'rangeSlider',
       group: 'desktopMegaMenu',
       options: {min: 0, max: 100, suffix: '%'},
       initialValue: 50,
       hidden: ({parent}) => !parent?.desktopMegaMenuShowOverlay,
     }),
+
+    // — Animation —
     defineField({
       name: 'desktopMegaMenuAnimation',
-      title: 'Dropdown entrance animation',
+      title: 'Entrance animation',
       type: 'string',
       group: 'desktopMegaMenu',
       description: 'Animation when the mega menu appears',
@@ -265,7 +271,7 @@ export default defineType({
       title: 'Content stagger animation',
       type: 'string',
       group: 'desktopMegaMenu',
-      description: 'How links/sections appear inside the mega menu',
+      description: 'How links and sections appear inside the mega menu',
       options: {
         list: [
           {title: 'None (All at once)', value: 'none'},
@@ -294,24 +300,26 @@ export default defineType({
       type: 'rangeSlider',
       group: 'desktopMegaMenu',
       description:
-        'Delay before stagger begins (useful for matching dropdown animation)',
+        'Delay before stagger begins (useful for matching the dropdown entrance animation)',
       options: {min: 0, max: 600, suffix: 'ms', step: 50},
       initialValue: 0,
       hidden: ({parent}) => parent?.desktopMegaMenuContentStagger === 'none',
     }),
 
-    /**
-     * ============================================================================
-     * MOBILE NAVIGATION
-     * Mobile navigation styling and behavior (drawer/hamburger menu).
-     * Image blocks from desktop mega menus are hidden on mobile for better performance.
-     * ============================================================================
-     */
+    // ============================================================================
+    // MOBILE NAVIGATION
+    // Drawer type, structure, spacing, typography, color, and separators.
+    // Image blocks from desktop mega menus are hidden on mobile.
+    // ============================================================================
+
+    // — Drawer —
     defineField({
       name: 'mobileDrawerType',
-      title: 'Mobile drawer type',
+      title: 'Drawer type',
       type: 'string',
       group: 'mobileNavigation',
+      description:
+        'Choose between side drawer or centered modal for mobile navigation',
       options: {
         list: [
           {title: 'Sidebar (Slide from side)', value: 'sidebar'},
@@ -321,8 +329,6 @@ export default defineType({
       },
       initialValue: 'sidebar',
       validation: (Rule) => Rule.required(),
-      description:
-        'Choose between side drawer or centered modal for mobile navigation',
     }),
     defineField({
       name: 'mobileSidebarConfig',
@@ -338,33 +344,31 @@ export default defineType({
       group: 'mobileNavigation',
       hidden: ({parent}) => parent?.mobileDrawerType !== 'modal',
     }),
+
+    // — Structure —
     defineField({
       name: 'mobileMegaMenuDepth',
       title: 'Navigation structure',
       type: 'string',
       group: 'mobileNavigation',
+      description:
+        'FLAT: Tap main navigation → see all submenu links directly. GROUPED: Tap main navigation → tap section heading → see links.',
       options: {
         list: [
-          {
-            title: 'Flat (One tap to links)',
-            value: 'flat',
-          },
-          {
-            title: 'Grouped (Two taps: section → links)',
-            value: 'nested',
-          },
+          {title: 'Flat (One tap to links)', value: 'flat'},
+          {title: 'Grouped (Two taps: section → links)', value: 'nested'},
         ],
         layout: 'radio',
       },
       initialValue: 'nested',
-      description:
-        'FLAT: Tap main navigation → see all submenu links directly. GROUPED: Tap main navigation → tap section heading → see links.',
     }),
     defineField({
       name: 'mobileMegaMenuBehavior',
       title: 'Submenu display style',
       type: 'string',
       group: 'mobileNavigation',
+      description:
+        'ACCORDION: Submenus expand below. SEQUENTIAL: Submenus replace the screen with a back button.',
       options: {
         list: [
           {title: 'Accordion (Expands in place)', value: 'accordion'},
@@ -374,14 +378,12 @@ export default defineType({
       },
       initialValue: 'accordion',
       validation: (Rule) => Rule.required(),
-      description:
-        'ACCORDION: Submenus expand below. SEQUENTIAL: Submenus replace screen with back button.',
     }),
 
-    // SPACING
+    // — Spacing —
     defineField({
       name: 'mobileDrawerContentPaddingX',
-      title: 'Drawer content horizontal padding',
+      title: 'Drawer horizontal padding',
       type: 'rangeSlider',
       group: 'mobileNavigation',
       options: {min: 0, max: 100, suffix: 'px'},
@@ -390,7 +392,7 @@ export default defineType({
     }),
     defineField({
       name: 'mobileDrawerContentPaddingY',
-      title: 'Drawer content vertical padding',
+      title: 'Drawer vertical padding',
       type: 'rangeSlider',
       group: 'mobileNavigation',
       options: {min: 0, max: 100, suffix: 'px'},
@@ -409,7 +411,7 @@ export default defineType({
     }),
     defineField({
       name: 'mobileMegaMenuLinkSpacing',
-      title: 'Space between submenu links',
+      title: 'Submenu link spacing',
       type: 'rangeSlider',
       group: 'mobileNavigation',
       options: {min: 0, max: 40, suffix: 'px'},
@@ -417,7 +419,7 @@ export default defineType({
       description: 'Vertical spacing between submenu links',
     }),
 
-    // TYPOGRAPHY
+    // — Typography —
     defineField({
       name: 'mobileNavigationTypography',
       title: 'Top-level navigation typography',
@@ -440,14 +442,14 @@ export default defineType({
       description: 'Typography for submenu links',
     }),
 
-    // COLOR SCHEMES
+    // — Color —
     defineField({
       name: 'mobileNavigationColorScheme',
-      title: 'Mobile navigation color scheme',
+      title: 'Color scheme',
       type: 'reference',
       to: [{type: 'colorScheme'}],
       group: 'mobileNavigation',
-      description: 'Color scheme for mobile navigation drawer',
+      description: 'Color scheme for the mobile navigation drawer',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -455,6 +457,8 @@ export default defineType({
       title: 'Section heading background color',
       type: 'string',
       group: 'mobileNavigation',
+      description:
+        'Which color property to use for section heading backgrounds',
       options: {
         list: [
           {title: 'Background', value: 'background'},
@@ -464,8 +468,6 @@ export default defineType({
         layout: 'dropdown',
       },
       initialValue: 'card',
-      description:
-        'Which color property to use for section heading backgrounds',
       hidden: ({parent}) => !parent?.mobileNavigationColorScheme,
     }),
     defineField({
@@ -473,6 +475,7 @@ export default defineType({
       title: 'Link background color',
       type: 'string',
       group: 'mobileNavigation',
+      description: 'Which color property to use for link backgrounds',
       options: {
         list: [
           {title: 'Background', value: 'background'},
@@ -482,11 +485,10 @@ export default defineType({
         layout: 'dropdown',
       },
       initialValue: 'background',
-      description: 'Which color property to use for link backgrounds',
       hidden: ({parent}) => !parent?.mobileNavigationColorScheme,
     }),
 
-    // SEPARATORS
+    // — Separators —
     defineField({
       name: 'mobileNavigationSeparatorLine',
       title: 'Navigation separator line',
@@ -495,17 +497,41 @@ export default defineType({
       description: 'Separator line between navigation items',
     }),
 
-    /**
-     * ============================================================================
-     * ANNOUNCEMENT BAR
-     * Controls announcement content and behavior.
-     * ============================================================================
-     */
+    // ============================================================================
+    // ANNOUNCEMENT BAR
+    // Content, appearance, and behavior for the top announcement strip.
+    // ============================================================================
+
+    // — Content —
     defineField({
       name: 'announcementBar',
-      title: 'Announcement bar content',
-      group: 'announcementBar',
+      title: 'Announcements',
       type: 'internationalizedArrayAnnouncementBar',
+      group: 'announcementBar',
+    }),
+    defineField({
+      name: 'announcementBarUtilityLinks',
+      title: 'Utility links',
+      type: 'internationalizedArrayLinks',
+      group: 'announcementBar',
+      description:
+        'Links on the right side of the announcement bar (e.g. Help, Stocklists, Services). Add a Locale Selector to allow country and language switching.',
+    }),
+
+    // — Appearance —
+    defineField({
+      name: 'announcementBarColorScheme',
+      title: 'Color scheme',
+      type: 'reference',
+      to: [{type: 'colorScheme'}],
+      group: 'announcementBar',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'announcementBarPadding',
+      title: 'Padding',
+      type: 'padding',
+      group: 'announcementBar',
     }),
     defineField({
       name: 'announcementBarTypography',
@@ -515,32 +541,27 @@ export default defineType({
       description: 'Typography for announcement bar text',
     }),
     defineField({
-      name: 'utilityLinks',
-      title: 'Utility links',
-      description: 'Links on the right side (e.g., Help, Stocklists, Services)',
-      type: 'internationalizedArrayLinks',
-      group: 'announcementBar',
-    }),
-    defineField({
       name: 'utilityLinksTypography',
       title: 'Utility links typography',
       type: 'fontStyleOverride',
       group: 'announcementBar',
       description: 'Typography for utility links',
     }),
-    defineField({
-      name: 'fadeTransition',
-      title: 'Use fade transition',
-      description: 'Fade between announcements instead of sliding',
-      type: 'boolean',
-      group: 'announcementBar',
-      initialValue: false,
-    }),
+
+    // — Behavior —
     defineField({
       name: 'autoRotateAnnouncements',
       title: 'Auto rotate announcements',
       type: 'boolean',
       group: 'announcementBar',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'fadeTransition',
+      title: 'Use fade transition',
+      type: 'boolean',
+      group: 'announcementBar',
+      description: 'Fade between announcements instead of sliding',
       initialValue: false,
     }),
     defineField({
@@ -552,7 +573,7 @@ export default defineType({
     }),
     defineField({
       name: 'announcementArrowSize',
-      title: 'Navigation arrow size',
+      title: 'Arrow size',
       type: 'rangeSlider',
       group: 'announcementBar',
       options: {min: 16, max: 48, suffix: 'px'},
@@ -562,7 +583,7 @@ export default defineType({
     }),
     defineField({
       name: 'announcementArrowStrokeWidth',
-      title: 'Navigation arrow stroke width',
+      title: 'Arrow stroke width',
       type: 'rangeSlider',
       group: 'announcementBar',
       options: {min: 1, max: 4, suffix: 'px', step: 0.25},
@@ -571,15 +592,13 @@ export default defineType({
       hidden: ({parent}) => !parent?.showAnnouncementArrows,
     }),
 
-    /**
-     * ============================================================================
-     * LAYOUT
-     * Global header layout across screen sizes.
-     * ============================================================================
-     */
+    // ============================================================================
+    // LAYOUT
+    // Header layout options for desktop and mobile.
+    // ============================================================================
     defineField({
       name: 'desktopLayout',
-      title: 'Desktop header layout',
+      title: 'Desktop layout',
       type: 'string',
       group: 'layout',
       options: {
@@ -596,7 +615,7 @@ export default defineType({
     }),
     defineField({
       name: 'mobileLayout',
-      title: 'Mobile header layout',
+      title: 'Mobile layout',
       type: 'string',
       group: 'layout',
       options: {
@@ -621,20 +640,19 @@ export default defineType({
     }),
     defineField({
       name: 'headerMinHeight',
-      title: 'Header minimum height',
-      description: 'Minimum header height (content may expand beyond this)',
+      title: 'Minimum height',
       type: 'rangeSlider',
       group: 'layout',
+      description: 'Minimum header height (content may expand beyond this)',
       options: {min: 0, max: 100, suffix: 'px'},
       initialValue: 0,
     }),
 
-    /**
-     * ============================================================================
-     * APPEARANCE
-     * Header color and visual styling.
-     * ============================================================================
-     */
+    // ============================================================================
+    // APPEARANCE
+    // Header-level color, blur, and separator. Announcement bar appearance
+    // is configured in the Announcement Bar tab.
+    // ============================================================================
     defineField({
       name: 'colorScheme',
       title: 'Header color scheme',
@@ -652,32 +670,16 @@ export default defineType({
     }),
     defineField({
       name: 'separatorLine',
-      title: 'Header separator line',
+      title: 'Separator line',
       type: 'separatorLine',
       group: 'appearance',
-      description: 'Separator between header and page content',
-    }),
-    defineField({
-      name: 'announcementBarColorScheme',
-      title: 'Announcement bar color scheme',
-      type: 'reference',
-      to: [{type: 'colorScheme'}],
-      group: 'appearance',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'announcementBarPadding',
-      title: 'Announcement bar padding',
-      type: 'padding',
-      group: 'appearance',
+      description: 'Separator between the header and page content',
     }),
 
-    /**
-     * ============================================================================
-     * ACTIONS
-     * Header actions such as account, cart, wishlist.
-     * ============================================================================
-     */
+    // ============================================================================
+    // ACTIONS
+    // Visibility and display style for header action buttons.
+    // ============================================================================
     defineField({
       name: 'showLocalizationSelector',
       title: 'Show localization selector',
@@ -687,7 +689,7 @@ export default defineType({
     }),
     defineField({
       name: 'showWishlist',
-      title: 'Show wishlist action',
+      title: 'Show wishlist',
       type: 'boolean',
       group: 'actions',
       initialValue: false,
@@ -695,9 +697,9 @@ export default defineType({
     defineField({
       name: 'accountStyleDesktop',
       title: 'Account display (desktop)',
-      description: 'Mobile always uses icon.',
       type: 'string',
       group: 'actions',
+      description: 'Mobile always uses icon.',
       options: {
         list: [
           {title: 'Icon', value: 'icon'},
@@ -707,13 +709,6 @@ export default defineType({
       },
       initialValue: 'icon',
       validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'actionsTypography',
-      title: 'Actions typography',
-      type: 'fontStyleOverride',
-      group: 'actions',
-      description: 'Typography for action labels (Account, Cart)',
     }),
     defineField({
       name: 'cartStyleDesktop',
@@ -745,13 +740,18 @@ export default defineType({
       initialValue: 'icon',
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: 'actionsTypography',
+      title: 'Actions typography',
+      type: 'fontStyleOverride',
+      group: 'actions',
+      description: 'Typography for action labels (Account, Cart)',
+    }),
 
-    /**
-     * ============================================================================
-     * BEHAVIOR
-     * Global header behavior settings.
-     * ============================================================================
-     */
+    // ============================================================================
+    // BEHAVIOR
+    // Global header scroll and sticky behavior.
+    // ============================================================================
     defineField({
       name: 'sticky',
       title: 'Sticky header',
