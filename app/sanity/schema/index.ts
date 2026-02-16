@@ -49,10 +49,10 @@ import modalConfig from './objects/aside/modal-config';
 import sidebarConfig from './objects/aside/sidebar-config';
 
 /**
- * LOCALE OBJECTS
- * Locale selector configuration and array member types.
+ * COUNTRY SELECTOR
+ * Locale/country selector configuration.
  */
-import localeSelectorItem from './objects/locale/locale-selector-item';
+import countrySelector from './objects/country-selector/country-selector';
 
 /**
  * NAVIGATION OBJECTS
@@ -65,7 +65,6 @@ import internalButton from './objects/navigation/internal-button';
 import internalLink from './objects/navigation/internal-link';
 import link from './objects/navigation/link';
 import links from './objects/navigation/links';
-import utilityLinks from './objects/navigation/utility-links';
 import megaMenu from './objects/navigation/menus/mega-menu/mega-menu';
 import linkSection from './objects/navigation/menus/mega-menu/sections/link-section';
 import imageBlock from './objects/navigation/menus/mega-menu/sections/image-block';
@@ -190,8 +189,8 @@ const objects = [
   modalConfig,
   sidebarConfig,
 
-  /* Locale */
-  localeSelectorItem,
+  /* Country Selector */
+  countrySelector,
 
   /* Navigation */
   anchor,
@@ -201,7 +200,6 @@ const objects = [
   internalLink,
   link,
   links,
-  utilityLinks,
   megaMenu,
   linkSection,
   imageBlock,

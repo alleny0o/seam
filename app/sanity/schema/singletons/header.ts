@@ -497,6 +497,23 @@ export default defineType({
       description: 'Separator line between navigation items',
     }),
 
+    // — Locale selector —
+    defineField({
+      name: 'showMobileLocaleSelector',
+      title: 'Show locale selector',
+      type: 'boolean',
+      group: 'mobileNavigation',
+      description: 'Show a locale selector in the mobile navigation drawer',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'mobileLocaleSelector',
+      title: 'Locale selector',
+      type: 'countrySelector',
+      group: 'mobileNavigation',
+      hidden: ({parent}) => !parent?.showMobileLocaleSelector,
+    }),
+
     // ============================================================================
     // ANNOUNCEMENT BAR
     // Content, appearance, and behavior for the top announcement strip.
@@ -515,7 +532,22 @@ export default defineType({
       type: 'internationalizedArrayLinks',
       group: 'announcementBar',
       description:
-        'Links on the right side of the announcement bar (e.g. Help, Stocklists, Services). Add a Locale Selector to allow country and language switching.',
+        'Links on the right side of the announcement bar (e.g. Help, Stocklists, Services)',
+    }),
+    defineField({
+      name: 'showAnnouncementBarLocaleSelector',
+      title: 'Show locale selector',
+      type: 'boolean',
+      group: 'announcementBar',
+      description: 'Show a locale selector after the utility links',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'announcementBarLocaleSelector',
+      title: 'Locale selector',
+      type: 'countrySelector',
+      group: 'announcementBar',
+      hidden: ({parent}) => !parent?.showAnnouncementBarLocaleSelector,
     }),
 
     // — Appearance —
@@ -681,18 +713,26 @@ export default defineType({
     // Visibility and display style for header action buttons.
     // ============================================================================
     defineField({
-      name: 'showLocalizationSelector',
-      title: 'Show localization selector',
-      type: 'boolean',
-      group: 'actions',
-      initialValue: false,
-    }),
-    defineField({
       name: 'showWishlist',
       title: 'Show wishlist',
       type: 'boolean',
       group: 'actions',
       initialValue: false,
+    }),
+    defineField({
+      name: 'showHeaderLocaleSelector',
+      title: 'Show locale selector',
+      type: 'boolean',
+      group: 'actions',
+      description: 'Show a locale selector in the header actions area',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'headerLocaleSelector',
+      title: 'Locale selector',
+      type: 'countrySelector',
+      group: 'actions',
+      hidden: ({parent}) => !parent?.showHeaderLocaleSelector,
     }),
     defineField({
       name: 'accountStyleDesktop',

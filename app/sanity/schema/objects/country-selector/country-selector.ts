@@ -1,35 +1,29 @@
-import {defineField, defineType} from 'sanity';
-import sidebarConfig from '../objects/aside/sidebar-config';
-import modalConfig from '../objects/aside/modal-config';
+import {defineField} from 'sanity';
+import dropdownConfig from '../aside/dropdown-config';
+import sidebarConfig from '../aside/sidebar-config';
+import modalConfig from '../aside/modal-config';
 
 /**
- * GROUPS
+ * COUNTRY SELECTOR
+ * Reusable object type for locale/country selector configuration.
+ * Use as type: 'countrySelector' wherever a locale selector is needed.
  */
-const GROUPS = [
-  {name: 'trigger', title: 'Trigger', default: true},
-  {name: 'display', title: 'Display Mode'},
-  {name: 'sidebar', title: 'Sidebar Config'},
-  {name: 'modal', title: 'Modal Config'},
-];
-
-export default defineType({
-  name: 'localeSelector',
-  type: 'document',
-  __experimental_formPreviewTitle: false,
-  groups: GROUPS,
-
+export default defineField({
+  name: 'countrySelector',
+  title: 'Locale Selector',
+  type: 'object',
+  options: {
+    collapsible: true,
+    collapsed: true,
+  },
   fields: [
-    /**
-     * ============================================================================
-     * TRIGGER
-     * Controls how the locale selector button looks.
-     * ============================================================================
-     */
+    // ============================================================================
+    // TRIGGER
+    // ============================================================================
     defineField({
       name: 'triggerVariant',
       title: 'Trigger variant',
       type: 'string',
-      group: 'trigger',
       description: 'What the locale selector button displays',
       options: {
         list: [
@@ -47,22 +41,28 @@ export default defineType({
       name: 'showChevron',
       title: 'Show chevron',
       type: 'boolean',
-      group: 'trigger',
       description: 'Show a chevron icon next to the trigger button',
       initialValue: true,
     }),
 
-    /**
-     * ============================================================================
-     * DISPLAY MODE
-     * Controls how the selector opens and at which breakpoints.
-     * ============================================================================
-     */
+    // ============================================================================
+    // COLOR
+    // ============================================================================
+    defineField({
+      name: 'colorScheme',
+      title: 'Color scheme',
+      type: 'reference',
+      to: [{type: 'colorScheme'}],
+      validation: (Rule) => Rule.required(),
+    }),
+
+    // ============================================================================
+    // DISPLAY MODE
+    // ============================================================================
     defineField({
       name: 'displayModeKind',
       title: 'Display mode',
       type: 'string',
-      group: 'display',
       description:
         'Use the same mode on all screen sizes, or different modes per breakpoint',
       options: {
@@ -76,12 +76,11 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
 
-    // ── Single mode ───────────────────────────────────────────────────────────
+    // — Single mode —
     defineField({
       name: 'mode',
       title: 'Mode',
       type: 'string',
-      group: 'display',
       description: 'How the locale selector opens on all screen sizes',
       options: {
         list: [
@@ -92,22 +91,25 @@ export default defineType({
         layout: 'radio',
       },
       initialValue: 'dropdown',
-      hidden: ({document}) => document?.displayModeKind !== 'single',
+      hidden: ({parent}) => {
+        const p = parent as Record<string, string | undefined>;
+        return p?.displayModeKind !== 'single';
+      },
       validation: (Rule) =>
         Rule.custom((value, ctx) => {
-          if (ctx.document?.displayModeKind === 'single' && !value) {
+          const p = ctx.parent as Record<string, string | undefined>;
+          if (p?.displayModeKind === 'single' && !value) {
             return 'Required when display mode is Single';
           }
           return true;
         }),
     }),
 
-    // ── Responsive mode ───────────────────────────────────────────────────────
+    // — Responsive mode —
     defineField({
       name: 'modeBase',
       title: 'Base mode (below sm / 640px)',
       type: 'string',
-      group: 'display',
       options: {
         list: [
           {title: 'Dropdown', value: 'dropdown'},
@@ -117,10 +119,14 @@ export default defineType({
         layout: 'dropdown',
       },
       initialValue: 'modal',
-      hidden: ({document}) => document?.displayModeKind !== 'responsive',
+      hidden: ({parent}) => {
+        const p = parent as Record<string, string | undefined>;
+        return p?.displayModeKind !== 'responsive';
+      },
       validation: (Rule) =>
         Rule.custom((value, ctx) => {
-          if (ctx.document?.displayModeKind === 'responsive' && !value) {
+          const p = ctx.parent as Record<string, string | undefined>;
+          if (p?.displayModeKind === 'responsive' && !value) {
             return 'Required when display mode is Responsive';
           }
           return true;
@@ -130,7 +136,6 @@ export default defineType({
       name: 'modeSm',
       title: 'Mode from sm (640px)',
       type: 'string',
-      group: 'display',
       description: 'Leave blank to inherit from base',
       options: {
         list: [
@@ -140,13 +145,15 @@ export default defineType({
         ],
         layout: 'dropdown',
       },
-      hidden: ({document}) => document?.displayModeKind !== 'responsive',
+      hidden: ({parent}) => {
+        const p = parent as Record<string, string | undefined>;
+        return p?.displayModeKind !== 'responsive';
+      },
     }),
     defineField({
       name: 'modeMd',
       title: 'Mode from md (768px)',
       type: 'string',
-      group: 'display',
       description: 'Leave blank to inherit from sm',
       options: {
         list: [
@@ -156,13 +163,15 @@ export default defineType({
         ],
         layout: 'dropdown',
       },
-      hidden: ({document}) => document?.displayModeKind !== 'responsive',
+      hidden: ({parent}) => {
+        const p = parent as Record<string, string | undefined>;
+        return p?.displayModeKind !== 'responsive';
+      },
     }),
     defineField({
       name: 'modeLg',
       title: 'Mode from lg (1024px)',
       type: 'string',
-      group: 'display',
       description: 'Leave blank to inherit from md',
       options: {
         list: [
@@ -172,37 +181,50 @@ export default defineType({
         ],
         layout: 'dropdown',
       },
-      hidden: ({document}) => document?.displayModeKind !== 'responsive',
+      hidden: ({parent}) => {
+        const p = parent as Record<string, string | undefined>;
+        return p?.displayModeKind !== 'responsive';
+      },
     }),
 
-    /**
-     * ============================================================================
-     * SIDEBAR CONFIG
-     * Only relevant when sidebar mode is selected at any breakpoint.
-     * ============================================================================
-     */
+    // ============================================================================
+    // CONTAINER CONFIGS
+    // ============================================================================
+    defineField({
+      ...dropdownConfig,
+      name: 'dropdownConfig',
+      title: 'Dropdown configuration',
+      hidden: ({parent}) => {
+        const p = parent as Record<string, string | undefined>;
+        if (p?.displayModeKind === 'single') return p?.mode !== 'dropdown';
+        return !['modeBase', 'modeSm', 'modeMd', 'modeLg'].some(
+          (key) => p?.[key] === 'dropdown',
+        );
+      },
+    }),
     defineField({
       ...sidebarConfig,
       name: 'sidebarConfig',
       title: 'Sidebar configuration',
-      group: 'sidebar',
+      hidden: ({parent}) => {
+        const p = parent as Record<string, string | undefined>;
+        if (p?.displayModeKind === 'single') return p?.mode !== 'sidebar';
+        return !['modeBase', 'modeSm', 'modeMd', 'modeLg'].some(
+          (key) => p?.[key] === 'sidebar',
+        );
+      },
     }),
-
-    /**
-     * ============================================================================
-     * MODAL CONFIG
-     * Only relevant when modal mode is selected at any breakpoint.
-     * ============================================================================
-     */
     defineField({
       ...modalConfig,
       name: 'modalConfig',
       title: 'Modal configuration',
-      group: 'modal',
+      hidden: ({parent}) => {
+        const p = parent as Record<string, string | undefined>;
+        if (p?.displayModeKind === 'single') return p?.mode !== 'modal';
+        return !['modeBase', 'modeSm', 'modeMd', 'modeLg'].some(
+          (key) => p?.[key] === 'modal',
+        );
+      },
     }),
   ],
-
-  preview: {
-    prepare: () => ({title: 'Locale Selector'}),
-  },
 });

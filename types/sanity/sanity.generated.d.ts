@@ -495,8 +495,12 @@ export type Header = {
   mobileMegaMenuSectionBackgroundProperty?: 'background' | 'card' | 'primary';
   mobileMegaMenuLinkBackgroundProperty?: 'background' | 'card' | 'primary';
   mobileNavigationSeparatorLine?: SeparatorLine;
+  showMobileLocaleSelector?: boolean;
+  mobileLocaleSelector?: CountrySelector;
   announcementBar?: InternationalizedArrayAnnouncementBar;
   announcementBarUtilityLinks?: InternationalizedArrayLinks;
+  showAnnouncementBarLocaleSelector?: boolean;
+  announcementBarLocaleSelector?: CountrySelector;
   announcementBarColorScheme?: {
     _ref: string;
     _type: 'reference';
@@ -523,8 +527,9 @@ export type Header = {
   };
   blur?: boolean;
   separatorLine?: SeparatorLine;
-  showLocalizationSelector?: boolean;
   showWishlist?: boolean;
+  showHeaderLocaleSelector?: boolean;
+  headerLocaleSelector?: CountrySelector;
   accountStyleDesktop?: 'icon' | 'text';
   cartStyleDesktop?: 'icon' | 'text';
   cartStyleMobile?: 'icon' | 'text';
@@ -542,6 +547,51 @@ export type FontStyleOverride = {
   letterSpacing?: RangeSlider;
   lineHeight?: RangeSlider;
   capitalize?: boolean;
+};
+
+export type CountrySelector = {
+  _type: 'countrySelector';
+  triggerVariant?: 'icon' | 'flag' | 'flag-country' | 'flag-country-lang';
+  showChevron?: boolean;
+  colorScheme?: {
+    _ref: string;
+    _type: 'reference';
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: 'colorScheme';
+  };
+  displayModeKind?: 'single' | 'responsive';
+  mode?: 'dropdown' | 'modal' | 'sidebar';
+  modeBase?: 'dropdown' | 'modal' | 'sidebar';
+  modeSm?: 'dropdown' | 'modal' | 'sidebar';
+  modeMd?: 'dropdown' | 'modal' | 'sidebar';
+  modeLg?: 'dropdown' | 'modal' | 'sidebar';
+  dropdownConfig?: {
+    borderRadius?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
+    shadow?: 'none' | 'sm' | 'md' | 'lg';
+    showBorder?: boolean;
+    borderWidth?: RangeSlider;
+  };
+  sidebarConfig?: {
+    position?: 'left' | 'right';
+    width?: RangeSlider;
+    maxWidth?: RangeSlider;
+    fullWidthBelow?: 'never' | 'sm' | 'md' | 'lg';
+    animation?: 'none' | 'slide' | 'slideFade';
+    animationDuration?: RangeSlider;
+    overlayOpacity?: RangeSlider;
+  };
+  modalConfig?: {
+    insetX?: RangeSlider;
+    insetY?: RangeSlider;
+    maxWidth?: RangeSlider;
+    maxHeight?: RangeSlider;
+    fullScreenBelow?: 'never' | 'sm' | 'md' | 'lg';
+    borderRadiusOnFullScreen?: 'keep' | 'none';
+    borderRadius?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
+    animation?: 'none' | 'fade' | 'scale' | 'slideTop' | 'slideBottom';
+    animationDuration?: RangeSlider;
+    overlayOpacity?: RangeSlider;
+  };
 };
 
 export type SeparatorLine = {
@@ -1090,18 +1140,6 @@ export type MegaMenu = {
   >;
 };
 
-export type UtilityLinks = Array<
-  | ({
-      _key: string;
-    } & InternalLink)
-  | ({
-      _key: string;
-    } & ExternalLink)
-  | ({
-      _key: string;
-    } & LocaleSelectorItem)
->;
-
 export type Links = Array<
   | ({
       _key: string;
@@ -1109,9 +1147,6 @@ export type Links = Array<
   | ({
       _key: string;
     } & ExternalLink)
-  | ({
-      _key: string;
-    } & LocaleSelectorItem)
 >;
 
 export type Link =
@@ -1180,11 +1215,6 @@ export type ExternalLink = {
 };
 
 export type Anchor = string;
-
-export type LocaleSelectorItem = {
-  _type: 'localeSelectorItem';
-  triggerVariant?: string;
-};
 
 export type DropdownConfig = {
   _type: 'dropdownConfig';
@@ -1452,11 +1482,6 @@ export type AnnouncementBar = Array<{
   _key: string;
 }>;
 
-export type InternationalizedArrayUtilityLinksValue = {
-  _type: 'internationalizedArrayUtilityLinksValue';
-  value?: UtilityLinks;
-};
-
 export type InternationalizedArrayLinksValue = {
   _type: 'internationalizedArrayLinksValue';
   value?: Links;
@@ -1506,12 +1531,6 @@ export type InternationalizedArrayStringValue = {
   _type: 'internationalizedArrayStringValue';
   value?: string;
 };
-
-export type InternationalizedArrayUtilityLinks = Array<
-  {
-    _key: string;
-  } & InternationalizedArrayUtilityLinksValue
->;
 
 export type InternationalizedArrayLink = Array<
   {
@@ -1773,6 +1792,7 @@ export type AllSanitySchemaTypes =
   | Sections
   | Header
   | FontStyleOverride
+  | CountrySelector
   | SeparatorLine
   | Padding
   | InternationalizedArrayLinks
@@ -1808,7 +1828,6 @@ export type AllSanitySchemaTypes =
   | ImageBlock
   | LinkSection
   | MegaMenu
-  | UtilityLinks
   | Links
   | Link
   | InternalLink
@@ -1816,7 +1835,6 @@ export type AllSanitySchemaTypes =
   | HeaderNavigation
   | ExternalLink
   | Anchor
-  | LocaleSelectorItem
   | DropdownConfig
   | Seo
   | ProductSections
@@ -1830,7 +1848,6 @@ export type AllSanitySchemaTypes =
   | ContentAlignment
   | BannerRichtext
   | AnnouncementBar
-  | InternationalizedArrayUtilityLinksValue
   | InternationalizedArrayLinksValue
   | InternationalizedArrayLinkValue
   | InternationalizedArrayBannerRichtextValue
@@ -1841,7 +1858,6 @@ export type AllSanitySchemaTypes =
   | InternationalizedArraySlugValue
   | InternationalizedArrayTextValue
   | InternationalizedArrayStringValue
-  | InternationalizedArrayUtilityLinks
   | InternationalizedArrayLink
   | InternationalizedArrayBannerRichtext
   | InternationalizedArrayRichtext
@@ -8079,7 +8095,7 @@ export type ROOT_QUERYResult = {
     mobileLayout: 'balanced' | 'brandLeft' | 'menuLeft' | null;
     desktopLogoWidth: RangeSlider | null;
     headerMinHeight: RangeSlider | null;
-    showLocalizationSelector: boolean | null;
+    showLocalizationSelector: null;
     showWishlist: boolean | null;
     accountStyleDesktop: 'icon' | 'text' | null;
     actionsTypography: {
