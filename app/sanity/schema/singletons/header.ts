@@ -509,7 +509,7 @@ export default defineType({
     defineField({
       name: 'mobileLocaleSelector',
       title: 'Locale selector',
-      type: 'countrySelector',
+      type: 'dropdownCountrySelector', // was: 'countrySelector'
       group: 'mobileNavigation',
       hidden: ({parent}) => !parent?.showMobileLocaleSelector,
     }),
@@ -545,7 +545,7 @@ export default defineType({
     defineField({
       name: 'announcementBarLocaleSelector',
       title: 'Locale selector',
-      type: 'countrySelector',
+      type: 'dropdownCountrySelector', // was: 'countrySelector'
       group: 'announcementBar',
       hidden: ({parent}) => !parent?.showAnnouncementBarLocaleSelector,
     }),

@@ -79,16 +79,15 @@ export const MODAL_CONFIG_FRAGMENT = defineQuery(`{
 
 /**
  * LOCALE SELECTOR FRAGMENT
- * Configuration for the locale/country selector UI component.
+ * Configuration for the locale/country selector UI component with full mode options.
  *
  * Fetches trigger appearance (variant + chevron), color scheme,
  * display mode (single or responsive per breakpoint), and the embedded
  * dropdown/sidebar/modal configs used when the selector opens.
  *
- * Used in three placements:
+ * Used in two placements:
  * - Header actions area (headerLocaleSelector)
  * - Announcement bar utility links (announcementBarLocaleSelector)
- * - Mobile navigation drawer (mobileLocaleSelector)
  *
  * Resolved to a fully typed LocaleSelectorConfig via resolveLocaleSelectorConfig().
  */
@@ -105,6 +104,23 @@ export const LOCALE_SELECTOR_FRAGMENT = defineQuery(`{
   dropdownConfig ${DROPDOWN_CONFIG_FRAGMENT},
   sidebarConfig ${SIDEBAR_CONFIG_FRAGMENT},
   modalConfig ${MODAL_CONFIG_FRAGMENT},
+}`);
+
+/**
+ * DROPDOWN COUNTRY SELECTOR FRAGMENT
+ * Simplified locale selector config that only supports dropdown mode.
+ *
+ * Used in mobile navigation where a dropdown is the only sensible UI pattern
+ * (since the selector is already inside a drawer/modal). No display mode options,
+ * no sidebar/modal configs — just trigger, color, and dropdown styling.
+ *
+ * Resolved to a fully typed DropdownCountrySelectorConfig via resolveDropdownCountrySelectorConfig().
+ */
+export const DROPDOWN_COUNTRY_SELECTOR_FRAGMENT = defineQuery(`{
+  triggerVariant,
+  showChevron,
+  colorScheme -> ${COLOR_SCHEME_FRAGMENT},
+  dropdownConfig ${DROPDOWN_CONFIG_FRAGMENT},
 }`);
 
 /**
@@ -521,9 +537,9 @@ export const HEADER_FRAGMENT = defineQuery(`{
     height,
   },
 
-  // Locale selector
+  // Locale selector (dropdown only)
   showMobileLocaleSelector,
-  mobileLocaleSelector ${LOCALE_SELECTOR_FRAGMENT},
+  mobileLocaleSelector ${DROPDOWN_COUNTRY_SELECTOR_FRAGMENT},
 
   // ─────────────────────────────────────────────────────────────────────────
   // HEADER APPEARANCE

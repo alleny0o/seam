@@ -53,6 +53,7 @@ import sidebarConfig from './objects/aside/sidebar-config';
  * Locale/country selector configuration.
  */
 import countrySelector from './objects/country-selector/country-selector';
+import dropdownCountrySelector from './objects/country-selector/dropdown-country-selector';
 
 /**
  * NAVIGATION OBJECTS
@@ -191,6 +192,7 @@ const objects = [
 
   /* Country Selector */
   countrySelector,
+  dropdownCountrySelector,
 
   /* Navigation */
   anchor,

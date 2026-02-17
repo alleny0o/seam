@@ -3333,7 +3333,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "countrySelector"
+          "name": "dropdownCountrySelector"
         },
         "optional": true
       },
@@ -3364,7 +3364,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "countrySelector"
+          "name": "dropdownCountrySelector"
         },
         "optional": true
       },
@@ -4382,6 +4382,162 @@
           "value": {
             "type": "inline",
             "name": "rangeSlider"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "dropdownCountrySelector",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "dropdownCountrySelector"
+          }
+        },
+        "triggerVariant": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "icon"
+              },
+              {
+                "type": "string",
+                "value": "flag"
+              },
+              {
+                "type": "string",
+                "value": "flag-country"
+              },
+              {
+                "type": "string",
+                "value": "flag-country-lang"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "showChevron": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "colorScheme": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "object",
+            "attributes": {
+              "_ref": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "_type": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string",
+                  "value": "reference"
+                }
+              },
+              "_weak": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "boolean"
+                },
+                "optional": true
+              }
+            },
+            "dereferencesTo": "colorScheme"
+          },
+          "optional": true
+        },
+        "dropdownConfig": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "object",
+            "attributes": {
+              "borderRadius": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "union",
+                  "of": [
+                    {
+                      "type": "string",
+                      "value": "none"
+                    },
+                    {
+                      "type": "string",
+                      "value": "sm"
+                    },
+                    {
+                      "type": "string",
+                      "value": "md"
+                    },
+                    {
+                      "type": "string",
+                      "value": "lg"
+                    },
+                    {
+                      "type": "string",
+                      "value": "xl"
+                    }
+                  ]
+                },
+                "optional": true
+              },
+              "shadow": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "union",
+                  "of": [
+                    {
+                      "type": "string",
+                      "value": "none"
+                    },
+                    {
+                      "type": "string",
+                      "value": "sm"
+                    },
+                    {
+                      "type": "string",
+                      "value": "md"
+                    },
+                    {
+                      "type": "string",
+                      "value": "lg"
+                    }
+                  ]
+                },
+                "optional": true
+              },
+              "showBorder": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "boolean"
+                },
+                "optional": true
+              },
+              "borderWidth": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "rangeSlider"
+                },
+                "optional": true
+              }
+            }
           },
           "optional": true
         }
