@@ -44,9 +44,16 @@ export const COLOR_SCHEME_FRAGMENT = defineQuery(`{
 
 /**
  * ASIDE CONFIG FRAGMENTS
- * Reusable fragments for sidebar and modal drawer configuration.
- * Used by mobile navigation, cart drawer, search drawer, etc.
+ * Reusable fragments for drawer and overlay UI configuration.
+ * Used by mobile navigation, cart drawer, search drawer, locale selector, etc.
  */
+export const DROPDOWN_CONFIG_FRAGMENT = defineQuery(`{
+  borderRadius,
+  shadow,
+  showBorder,
+  borderWidth,
+}`);
+
 export const SIDEBAR_CONFIG_FRAGMENT = defineQuery(`{
   position,
   width,
@@ -72,24 +79,30 @@ export const MODAL_CONFIG_FRAGMENT = defineQuery(`{
 
 /**
  * LOCALE SELECTOR FRAGMENT
- * Configuration for the locale selector UI component.
+ * Configuration for the locale/country selector UI component.
  *
- * Fetches trigger appearance (variant + chevron), display mode
- * (single or responsive per breakpoint), and the embedded sidebar/modal
- * configs used when the selector opens as a drawer or overlay.
+ * Fetches trigger appearance (variant + chevron), color scheme,
+ * display mode (single or responsive per breakpoint), and the embedded
+ * dropdown/sidebar/modal configs used when the selector opens.
  *
- * Available in root loader data as `localeSelector`.
+ * Used in three placements:
+ * - Header actions area (headerLocaleSelector)
+ * - Announcement bar utility links (announcementBarLocaleSelector)
+ * - Mobile navigation drawer (mobileLocaleSelector)
+ *
  * Resolved to a fully typed LocaleSelectorConfig via resolveLocaleSelectorConfig().
  */
 export const LOCALE_SELECTOR_FRAGMENT = defineQuery(`{
   triggerVariant,
   showChevron,
+  colorScheme -> ${COLOR_SCHEME_FRAGMENT},
   displayModeKind,
   mode,
   modeBase,
   modeSm,
   modeMd,
   modeLg,
+  dropdownConfig ${DROPDOWN_CONFIG_FRAGMENT},
   sidebarConfig ${SIDEBAR_CONFIG_FRAGMENT},
   modalConfig ${MODAL_CONFIG_FRAGMENT},
 }`);
@@ -399,6 +412,10 @@ export const HEADER_FRAGMENT = defineQuery(`{
     utilityLinks[_key == $defaultLanguage][0].value[],
   )[] ${LINKS_LIST_SELECTION},
 
+  // Locale selector
+  showAnnouncementBarLocaleSelector,
+  announcementBarLocaleSelector ${LOCALE_SELECTOR_FRAGMENT},
+
   // Appearance
   announcementBarColorScheme -> ${COLOR_SCHEME_FRAGMENT},
   announcementBarTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
@@ -504,6 +521,10 @@ export const HEADER_FRAGMENT = defineQuery(`{
     height,
   },
 
+  // Locale selector
+  showMobileLocaleSelector,
+  mobileLocaleSelector ${LOCALE_SELECTOR_FRAGMENT},
+
   // ─────────────────────────────────────────────────────────────────────────
   // HEADER APPEARANCE
   // ─────────────────────────────────────────────────────────────────────────
@@ -527,11 +548,12 @@ export const HEADER_FRAGMENT = defineQuery(`{
 
   // ─────────────────────────────────────────────────────────────────────────
   // ACTIONS
-  // Account, cart, wishlist, localization.
+  // Account, cart, wishlist, locale selector.
   // ─────────────────────────────────────────────────────────────────────────
 
-  showLocalizationSelector,
   showWishlist,
+  showHeaderLocaleSelector,
+  headerLocaleSelector ${LOCALE_SELECTOR_FRAGMENT},
   accountStyleDesktop,
   actionsTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
   cartStyleDesktop,
