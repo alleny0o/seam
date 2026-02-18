@@ -1,21 +1,34 @@
 import {stegaClean} from '@sanity/client/stega';
 import type {
   LocaleSelectorConfig,
+  DropdownLocaleSelectorConfig,
   SelectorMode,
   DisplayMode,
   TriggerVariant,
+  RawDropdownConfig,
+  RawColorScheme,
 } from '../types';
-import {LOCALE_SELECTOR_DEFAULTS} from '../constants';
+import {
+  LOCALE_SELECTOR_DEFAULTS,
+  DROPDOWN_LOCALE_SELECTOR_DEFAULTS,
+} from '../constants';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// RAW SANITY SHAPE
-// Flat fields as returned by LOCALE_SELECTOR_FRAGMENT.
+// RAW SANITY SHAPES
+// Flat fields as returned by LOCALE_SELECTOR_FRAGMENT and
+// DROPDOWN_COUNTRY_SELECTOR_FRAGMENT respectively.
 // ─────────────────────────────────────────────────────────────────────────────
 
+/**
+ * Raw shape from LOCALE_SELECTOR_FRAGMENT.
+ * Used for header actions and announcement bar placements.
+ */
 export type RawSanityLocaleSelectorConfig =
   | {
       triggerVariant?: string | null;
       showChevron?: boolean | null;
+      // Color scheme — already resolved via -> projection in GROQ
+      colorScheme?: RawColorScheme;
       // Display mode
       displayModeKind?: string | null;
       mode?: string | null; // used when kind = 'single'
@@ -23,9 +36,25 @@ export type RawSanityLocaleSelectorConfig =
       modeSm?: string | null;
       modeMd?: string | null;
       modeLg?: string | null;
-      // Aside configs
+      // Container configs
+      dropdownConfig?: RawDropdownConfig;
       sidebarConfig?: Record<string, unknown> | null;
       modalConfig?: Record<string, unknown> | null;
+    }
+  | null
+  | undefined;
+
+/**
+ * Raw shape from DROPDOWN_COUNTRY_SELECTOR_FRAGMENT.
+ * Used for the mobile placement — no display mode fields.
+ */
+export type RawSanityDropdownLocaleSelectorConfig =
+  | {
+      triggerVariant?: string | null;
+      showChevron?: boolean | null;
+      // Color scheme — already resolved via -> projection in GROQ
+      colorScheme?: RawColorScheme;
+      dropdownConfig?: RawDropdownConfig;
     }
   | null
   | undefined;
@@ -82,18 +111,17 @@ function resolveDisplayMode(
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// MAIN RESOLVER
+// RESOLVERS
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
  * Resolves raw Sanity locale selector config into a fully typed
  * LocaleSelectorConfig with no nulls.
  *
- * Mirrors the pattern of resolveAsideConfig in app/features/aside —
- * cleans stega encoding, applies defaults for missing fields, and
- * returns a shape that components can consume directly.
+ * For header actions and announcement bar placements.
+ * Handles full display mode logic (single + responsive breakpoints).
  *
- * @param raw - Raw data from the LOCALE_SELECTOR_FRAGMENT GROQ query
+ * @param raw - Raw data from LOCALE_SELECTOR_FRAGMENT
  * @returns Fully resolved LocaleSelectorConfig
  */
 export function resolveLocaleSelectorConfig(
@@ -106,8 +134,35 @@ export function resolveLocaleSelectorConfig(
       cleanTriggerVariant(raw.triggerVariant) ??
       LOCALE_SELECTOR_DEFAULTS.triggerVariant,
     showChevron: raw.showChevron ?? LOCALE_SELECTOR_DEFAULTS.showChevron,
+    colorScheme: raw.colorScheme ?? null,
     displayMode: resolveDisplayMode(raw),
+    dropdownConfig: raw.dropdownConfig ?? null,
     sidebarConfig: raw.sidebarConfig ?? null,
     modalConfig: raw.modalConfig ?? null,
+  };
+}
+
+/**
+ * Resolves raw Sanity dropdown-only locale selector config into a fully typed
+ * DropdownLocaleSelectorConfig with no nulls.
+ *
+ * For the mobile placement only. No display mode logic — always dropdown.
+ *
+ * @param raw - Raw data from DROPDOWN_COUNTRY_SELECTOR_FRAGMENT
+ * @returns Fully resolved DropdownLocaleSelectorConfig
+ */
+export function resolveDropdownLocaleSelectorConfig(
+  raw: RawSanityDropdownLocaleSelectorConfig,
+): DropdownLocaleSelectorConfig {
+  if (!raw) return DROPDOWN_LOCALE_SELECTOR_DEFAULTS;
+
+  return {
+    triggerVariant:
+      cleanTriggerVariant(raw.triggerVariant) ??
+      DROPDOWN_LOCALE_SELECTOR_DEFAULTS.triggerVariant,
+    showChevron:
+      raw.showChevron ?? DROPDOWN_LOCALE_SELECTOR_DEFAULTS.showChevron,
+    colorScheme: raw.colorScheme ?? null,
+    dropdownConfig: raw.dropdownConfig ?? null,
   };
 }
