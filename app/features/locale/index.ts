@@ -1,5 +1,8 @@
 // Components
-export {LocaleSelector} from './components/locale-selector';
+export {
+  LocaleSelector,
+  DropdownLocaleSelector,
+} from './components/locale-selector';
 
 // Context
 export {
@@ -11,17 +14,28 @@ export {
 export {useLocaleSelector} from './hooks/use-locale-selector';
 
 // Utils
-export {resolveLocaleSelectorConfig} from './utils/resolve-locale-selector-config';
+export {
+  resolveLocaleSelectorConfig,
+  resolveDropdownLocaleSelectorConfig,
+} from './utils/resolve-locale-selector-config';
 
 // Types
 export type {
   LocaleSelectorProps,
+  DropdownLocaleSelectorProps,
   LocaleSelectorConfig,
+  DropdownLocaleSelectorConfig,
   RawLocaleSelectorConfig,
+  RawDropdownConfig,
+  RawColorScheme,
   TriggerVariant,
   SelectorMode,
   DisplayMode,
   SingleDisplayMode,
   ResponsiveDisplayMode,
+  PlacementId,
 } from './types';
-export type {RawSanityLocaleSelectorConfig} from './utils/resolve-locale-selector-config';
+export type {
+  RawSanityLocaleSelectorConfig,
+  RawSanityDropdownLocaleSelectorConfig,
+} from './utils/resolve-locale-selector-config';
