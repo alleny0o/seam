@@ -1,7 +1,8 @@
-import {useEffect} from 'react';
+import {useEffect, type CSSProperties} from 'react';
 import {AnimatePresence, m} from 'motion/react';
 import * as Popover from '@radix-ui/react-popover';
 import {cn} from '~/lib/utils';
+import type {RawDropdownConfig} from '../types';
 
 interface LocaleDropdownProps {
   isOpen: boolean;
@@ -12,10 +13,46 @@ interface LocaleDropdownProps {
    * Used when locale selector is rendered inside the mobile menu.
    */
   forceUpward?: boolean;
+  /** Dropdown container styling from Sanity dropdownConfig */
+  dropdownConfig?: RawDropdownConfig;
   children: React.ReactNode;
 }
 
 const ENTER_EASE: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
+
+/**
+ * Resolves Sanity dropdownConfig into inline styles for the panel.
+ * Uses inline styles because values are dynamic — can't use Tailwind classes.
+ */
+function resolveDropdownStyles(config: RawDropdownConfig): CSSProperties {
+  if (!config) return {};
+
+  const styles: CSSProperties = {};
+
+  if (config.borderRadius != null) {
+    styles.borderRadius = `${config.borderRadius}px`;
+  }
+
+  if (config.shadow) {
+    const shadowMap: Record<string, string> = {
+      none: 'none',
+      sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+      md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+      lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+      xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+    };
+    styles.boxShadow = shadowMap[config.shadow] ?? shadowMap.md;
+  }
+
+  if (config.showBorder && config.borderWidth != null) {
+    styles.borderWidth = `${config.borderWidth}px`;
+    styles.borderStyle = 'solid';
+  } else if (!config.showBorder) {
+    styles.border = 'none';
+  }
+
+  return styles;
+}
 
 /**
  * Locale selector dropdown container using Radix Popover.
@@ -26,12 +63,14 @@ const ENTER_EASE: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
  * - Click outside and Escape handled by Radix
  * - Closes on scroll via document capture listener
  * - Motion animation via AnimatePresence + m.div
+ * - dropdownConfig applies dynamic border radius, shadow, and border from Sanity
  */
 export function LocaleDropdown({
   isOpen,
   onOpenChange,
   trigger,
   forceUpward = false,
+  dropdownConfig,
   children,
 }: LocaleDropdownProps) {
   // Radix has no built-in close-on-scroll. We attach to document in capture
@@ -39,9 +78,15 @@ export function LocaleDropdown({
   useEffect(() => {
     if (!isOpen) return;
     const handleScroll = () => onOpenChange(false);
-    document.addEventListener('scroll', handleScroll, {passive: true, capture: true});
-    return () => document.removeEventListener('scroll', handleScroll, {capture: true});
+    document.addEventListener('scroll', handleScroll, {
+      passive: true,
+      capture: true,
+    });
+    return () =>
+      document.removeEventListener('scroll', handleScroll, {capture: true});
   }, [isOpen, onOpenChange]);
+
+  const dropdownStyles = resolveDropdownStyles(dropdownConfig);
 
   return (
     <Popover.Root open={isOpen} onOpenChange={onOpenChange}>
@@ -63,10 +108,7 @@ export function LocaleDropdown({
           avoidCollisions={!forceUpward}
           collisionPadding={8}
           onOpenAutoFocus={(e) => e.preventDefault()}
-          className={cn(
-            'z-70 outline-none',
-            !isOpen && 'pointer-events-none',
-          )}
+          className={cn('z-70 outline-none', !isOpen && 'pointer-events-none')}
         >
           <AnimatePresence>
             {isOpen && (
@@ -76,9 +118,10 @@ export function LocaleDropdown({
                 aria-label="Select country and language"
                 className={cn(
                   'w-[min(320px,calc(100vw-16px))]',
-                  'rounded-md border bg-background p-4 shadow-md',
+                  'border bg-background p-4',
                   'max-h-[min(400px,calc(100vh-80px))] overflow-y-auto',
                 )}
+                style={dropdownStyles}
                 initial={{opacity: 0, y: forceUpward ? 4 : -4}}
                 animate={{
                   opacity: 1,
