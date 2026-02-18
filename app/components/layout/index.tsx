@@ -25,8 +25,9 @@ import {TailwindIndicator} from '../tailwind-indicator';
 import {AsideProvider} from '~/features/aside';
 
 // locale selector
-import {LocaleSelectorProvider} from '~/features/locale/context/locale-selector-context';
+import {LocaleSelectorProvider} from '~/features/locale';
 
+// cart
 import {type CartReturn} from '@shopify/hydrogen';
 
 export type LayoutProps = {

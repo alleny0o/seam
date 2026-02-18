@@ -18,5 +18,5 @@ export type AnnouncementBarEntry = NonNullable<
 
 /** Utility link entry from header configuration */
 export type UtilityLink = NonNullable<
-  NonNullable<ROOT_QUERYResult['header']>['utilityLinks']
+  NonNullable<ROOT_QUERYResult['header']>['announcementBarUtilityLinks']
 >[number];

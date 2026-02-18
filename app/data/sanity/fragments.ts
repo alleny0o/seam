@@ -423,9 +423,9 @@ export const HEADER_FRAGMENT = defineQuery(`{
   },
 
   // Utility links (localized)
-  "utilityLinks": coalesce(
-    utilityLinks[_key == $language][0].value[],
-    utilityLinks[_key == $defaultLanguage][0].value[],
+  "announcementBarUtilityLinks": coalesce(
+    announcementBarUtilityLinks[_key == $language][0].value[],
+    announcementBarUtilityLinks[_key == $defaultLanguage][0].value[],
   )[] ${LINKS_LIST_SELECTION},
 
   // Locale selector

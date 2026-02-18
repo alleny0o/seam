@@ -19,7 +19,11 @@ import {AnnouncementItem} from './announcement-item';
 import {SanityInternalLink} from '~/components/sanity/link/sanity-internal-link';
 import {SanityExternalLink} from '~/components/sanity/link/sanity-external-link';
 import type {AnnouncementBarEntry, UtilityLink} from '../../types';
-import {LocaleSelector} from '~/features/locale';
+import {
+  LocaleSelector,
+  RawSanityLocaleSelectorConfig,
+  resolveLocaleSelectorConfig,
+} from '~/features/locale';
 
 /** Default padding value in pixels when not specified */
 const DEFAULT_PADDING = 0;
@@ -35,11 +39,11 @@ const PADDING_OFFSET = 2;
  * Supports auto-rotation, fade/slide transitions, and customizable styling via Sanity CMS.
  */
 export function AnnouncementBar() {
-  const {sanityRoot, localeSelectorConfig} = useRootLoaderData();
+  const {sanityRoot} = useRootLoaderData();
   const data = sanityRoot?.data as ROOT_QUERYResult | undefined;
   const header = data?.header;
   const announcementBar = header?.announcementBar;
-  const utilityLinks = header?.utilityLinks;
+  const utilityLinks = header?.announcementBarUtilityLinks;
 
   const paddingTop = header?.announcementBarPadding?.top ?? DEFAULT_PADDING;
   const paddingBottom =
@@ -48,7 +52,7 @@ export function AnnouncementBar() {
   const isArrowsActive =
     header?.showAnnouncementArrows && (announcementBar?.length ?? 0) > 1;
 
-  const showLocaleSelector = header?.showLocalizationSelector ?? false;
+  const showLocaleSelector = header?.showAnnouncementBarLocaleSelector ?? false;
 
   const isUtilitiesActive =
     (utilityLinks?.length ?? 0) > 0 || showLocaleSelector;
@@ -176,8 +180,13 @@ export function AnnouncementBar() {
               )}
             </React.Fragment>
           ))}
-          { localeSelectorConfig && (
-            <LocaleSelector config={localeSelectorConfig} />
+          {showLocaleSelector && header?.announcementBarLocaleSelector && (
+            <LocaleSelector
+              config={resolveLocaleSelectorConfig(
+                header.announcementBarLocaleSelector as RawSanityLocaleSelectorConfig,
+              )}
+              placementId="announcementBar"
+            />
           )}
         </nav>
       )}
