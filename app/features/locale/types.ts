@@ -43,8 +43,58 @@ export type ResponsiveDisplayMode = {
 export type DisplayMode = SingleDisplayMode | ResponsiveDisplayMode;
 
 // ============================================================================
-// SANITY CONFIG
-// Raw shape coming from Sanity — all fields optional/nullable.
+// DROPDOWN CONFIG
+// Raw shape for dropdown container styling from Sanity dropdownConfig.
+// Matches DROPDOWN_CONFIG_FRAGMENT fields exactly.
+// ============================================================================
+
+export type RawDropdownConfig =
+  | {
+      borderRadius?: number | null;
+      shadow?: string | null;
+      showBorder?: boolean | null;
+      borderWidth?: number | null;
+    }
+  | null
+  | undefined;
+
+// ============================================================================
+// COLOR SCHEME
+// Raw resolved color scheme from Sanity (colorScheme -> projection).
+// Fields match COLOR_SCHEME_FRAGMENT exactly.
+// ============================================================================
+
+type ColorValue = {
+  alpha?: number | null;
+  hex?: string | null;
+  hsl?: unknown;
+  rgb?: unknown;
+} | null;
+
+export type RawColorScheme =
+  | {
+      background?: ColorValue;
+      border?: ColorValue;
+      card?: ColorValue;
+      cardForeground?: ColorValue;
+      foreground?: ColorValue;
+      primary?: ColorValue;
+      primaryForeground?: ColorValue;
+    }
+  | null
+  | undefined;
+
+// ============================================================================
+// PLACEMENT
+// Identifies which header placement a locale selector instance belongs to.
+// Used by LocaleSelectorProvider to isolate open/close state per placement.
+// ============================================================================
+
+export type PlacementId = 'header' | 'announcementBar' | 'mobile';
+
+// ============================================================================
+// SANITY RAW CONFIG (legacy shape — superseded by RawSanity* types
+// in resolve-locale-selector-config.ts but kept for compatibility)
 // ============================================================================
 
 export type RawLocaleSelectorConfig = {
@@ -57,24 +107,44 @@ export type RawLocaleSelectorConfig = {
 
 export type RawDisplayMode = {
   kind?: 'single' | 'responsive' | null;
-  mode?: SelectorMode | null; // used when kind = 'single'
-  base?: SelectorMode | null; // used when kind = 'responsive'
+  mode?: SelectorMode | null;
+  base?: SelectorMode | null;
   sm?: SelectorMode | null;
   md?: SelectorMode | null;
   lg?: SelectorMode | null;
 };
 
 // ============================================================================
-// RESOLVED CONFIG
+// RESOLVED CONFIGS
 // Fully resolved, no nulls — ready to use in components.
 // ============================================================================
 
+/**
+ * Full config for header actions and announcement bar placements.
+ * Supports all three display modes (dropdown, modal, sidebar) and
+ * responsive breakpoint configuration.
+ */
 export type LocaleSelectorConfig = {
   triggerVariant: TriggerVariant;
   showChevron: boolean;
+  colorScheme: RawColorScheme;
   displayMode: DisplayMode;
+  dropdownConfig: RawDropdownConfig;
   sidebarConfig: RawSidebarConfig;
   modalConfig: RawModalConfig;
+};
+
+/**
+ * Simplified config for the mobile placement.
+ * Always dropdown mode — no display mode logic needed since
+ * it's already inside a drawer (mobileLocaleSelector uses
+ * dropdownCountrySelector schema type).
+ */
+export type DropdownLocaleSelectorConfig = {
+  triggerVariant: TriggerVariant;
+  showChevron: boolean;
+  colorScheme: RawColorScheme;
+  dropdownConfig: RawDropdownConfig;
 };
 
 // ============================================================================
@@ -84,11 +154,18 @@ export type LocaleSelectorConfig = {
 export interface LocaleSelectorProps {
   /** Resolved config from Sanity */
   config: LocaleSelectorConfig;
+  /** Which header placement this instance belongs to */
+  placementId: PlacementId;
   /**
    * When true, forces dropdown mode opening upward.
    * Used when locale selector is rendered inside the mobile menu aside.
    */
   inMobileMenu?: boolean;
+}
+
+export interface DropdownLocaleSelectorProps {
+  /** Resolved dropdown-only config from Sanity */
+  config: DropdownLocaleSelectorConfig;
 }
 
 export interface LocaleTriggerProps {

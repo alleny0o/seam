@@ -1,4 +1,4 @@
-import type {LocaleSelectorConfig} from './types';
+import type {LocaleSelectorConfig, DropdownLocaleSelectorConfig} from './types';
 
 // ============================================================================
 // FLAG CDN
@@ -23,10 +23,19 @@ export function getFlagUrl(countryCode: string): string {
 export const LOCALE_SELECTOR_DEFAULTS: LocaleSelectorConfig = {
   triggerVariant: 'flag-country',
   showChevron: true,
+  colorScheme: null,
   displayMode: {
     kind: 'single',
     mode: 'dropdown',
   },
+  dropdownConfig: null,
   sidebarConfig: null,
   modalConfig: null,
+};
+
+export const DROPDOWN_LOCALE_SELECTOR_DEFAULTS: DropdownLocaleSelectorConfig = {
+  triggerVariant: 'flag-country',
+  showChevron: true,
+  colorScheme: null,
+  dropdownConfig: null,
 };
