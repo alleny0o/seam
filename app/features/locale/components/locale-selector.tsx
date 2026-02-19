@@ -10,7 +10,7 @@ import {LocaleSidebar, useLocaleSidebar} from './locale-sidebar';
 
 import type {
   LocaleSelectorProps,
-  DropdownLocaleSelectorProps,
+  PopoverLocaleSelectorProps,
   SelectorMode,
   DisplayMode,
   PlacementId,
@@ -67,15 +67,15 @@ function getResponsiveClasses(
 // INNER COMPONENTS
 // ============================================================================
 
-interface DropdownSelectorProps extends LocaleSelectorProps {
+interface PopoverSelectorProps extends LocaleSelectorProps {
   placementId: PlacementId;
 }
 
-function DropdownSelector({
+function PopoverSelector({
   config,
   inMobileMenu,
   placementId,
-}: DropdownSelectorProps) {
+}: PopoverSelectorProps) {
   const {isOpenFor, open, close} = useLocaleSelectorContext();
   const isOpen = isOpenFor(placementId);
   const {
@@ -92,7 +92,6 @@ function DropdownSelector({
       isOpen={isOpen}
       onOpenChange={(next) => (next ? open(placementId) : close())}
       forceUpward={inMobileMenu}
-      dropdownConfig={config.dropdownConfig}
       trigger={
         <LocaleTrigger
           variant={config.triggerVariant}
@@ -192,7 +191,7 @@ function SidebarSelector({config, placementId}: LocaleSelectorProps) {
 
 /**
  * Full locale selector for header actions and announcement bar placements.
- * Supports dropdown, modal, and sidebar modes with responsive breakpoints.
+ * Supports popover, modal, and sidebar modes with responsive breakpoints.
  * Requires a placementId to isolate open/close state per placement.
  */
 export function LocaleSelector({
@@ -202,7 +201,7 @@ export function LocaleSelector({
 }: LocaleSelectorProps) {
   if (inMobileMenu) {
     return (
-      <DropdownSelector
+      <PopoverSelector
         config={config}
         placementId={placementId}
         inMobileMenu={true}
@@ -217,17 +216,17 @@ export function LocaleSelector({
       return <ModalSelector config={config} placementId={placementId} />;
     if (displayMode.mode === 'sidebar')
       return <SidebarSelector config={config} placementId={placementId} />;
-    return <DropdownSelector config={config} placementId={placementId} />;
+    return <PopoverSelector config={config} placementId={placementId} />;
   }
 
-  const dropdownClasses = getResponsiveClasses(displayMode, 'dropdown');
+  const popoverClasses = getResponsiveClasses(displayMode, 'popover');
   const modalClasses = getResponsiveClasses(displayMode, 'modal');
   const sidebarClasses = getResponsiveClasses(displayMode, 'sidebar');
 
   return (
     <>
-      <div className={cn(dropdownClasses)}>
-        <DropdownSelector config={config} placementId={placementId} />
+      <div className={cn(popoverClasses)}>
+        <PopoverSelector config={config} placementId={placementId} />
       </div>
       <div className={cn(modalClasses)}>
         <ModalSelector config={config} placementId={placementId} />
@@ -240,12 +239,12 @@ export function LocaleSelector({
 }
 
 /**
- * Dropdown-only locale selector for the mobile navigation placement.
- * Always renders as a dropdown opening upward (forceUpward=true) since
+ * Popover-only locale selector for the mobile navigation placement.
+ * Always renders as a popover opening upward (forceUpward=true) since
  * it lives inside the mobile drawer. No display mode logic needed.
  * placementId is hardcoded to 'mobile'.
  */
-export function DropdownLocaleSelector({config}: DropdownLocaleSelectorProps) {
+export function PopoverLocaleSelector({config}: PopoverLocaleSelectorProps) {
   const {isOpenFor, open, close} = useLocaleSelectorContext();
   const isOpen = isOpenFor('mobile');
   const {
@@ -262,7 +261,6 @@ export function DropdownLocaleSelector({config}: DropdownLocaleSelectorProps) {
       isOpen={isOpen}
       onOpenChange={(next) => (next ? open('mobile') : close())}
       forceUpward={true}
-      dropdownConfig={config.dropdownConfig}
       trigger={
         <LocaleTrigger
           variant={config.triggerVariant}

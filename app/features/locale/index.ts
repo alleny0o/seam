@@ -1,7 +1,7 @@
 // Components
 export {
   LocaleSelector,
-  DropdownLocaleSelector,
+  PopoverLocaleSelector,
 } from './components/locale-selector';
 
 // Context
@@ -16,17 +16,17 @@ export {useLocaleSelector} from './hooks/use-locale-selector';
 // Utils
 export {
   resolveLocaleSelectorConfig,
-  resolveDropdownLocaleSelectorConfig,
+  resolvePopoverLocaleSelectorConfig,
 } from './utils/resolve-locale-selector-config';
 
 // Types
 export type {
   LocaleSelectorProps,
-  DropdownLocaleSelectorProps,
+  PopoverLocaleSelectorProps,
   LocaleSelectorConfig,
-  DropdownLocaleSelectorConfig,
+  PopoverLocaleSelectorConfig,
   RawLocaleSelectorConfig,
-  RawDropdownConfig,
+  RawPopoverConfig,
   RawColorScheme,
   TriggerVariant,
   SelectorMode,
@@ -37,5 +37,5 @@ export type {
 } from './types';
 export type {
   RawSanityLocaleSelectorConfig,
-  RawSanityDropdownLocaleSelectorConfig,
+  RawSanityPopoverLocaleSelectorConfig,
 } from './utils/resolve-locale-selector-config';
