@@ -1,49 +1,17 @@
-# 🛒 allen.dev-store
+# Seam
 
-A minimalist, developer-friendly **Shopify Hydrogen (Remix)** theme built on top of the open-source **Fluid** starter — designed to be **customized and extended by other businesses and developers**.
+A configurable Shopify Hydrogen theme built on the Fluid starter.
 
----
+![Seam](docs/assets/preview.png)
 
-## ✨ Features
+## Demo
 
-* 🛒 **Shopify Hydrogen (Remix)** base
-* 🌊 **Fluid** starter (with built-in Sanity CMS) — customized by me
-* 🧠 **Sanity CMS** content management (pre-integrated in Fluid)
-* 🌍 **Built-in localization** (multi-language ready)
-* 🎨 **Minimalist storefront design**
-* ☁️ **AWS-backed product customization**
+Take a look at the demo [here](https://youtube.com) and the documentation [here](https://fluid.frontvibe.com).
 
----
+## Credits
 
-## 🚀 Why allen.dev-store
+Seam is built on [Fluid](https://github.com/frontvibe/fluid) by [Frontvibe](https://frontvibe.com) (MIT).
 
-This project’s purpose is to give **other businesses and developers a starting point**:
+## License
 
-* Use it as a Shopify Hydrogen theme with a clean, minimal design
-* Customize content, layout, and features using Sanity CMS and Remix
-* Extend functionality with AWS or your own integrations
-* Save time by starting from a flexible, production-ready codebase
-
----
-
-## 🖼️ Demo Store (Coming Soon)
-
-A gallery of screenshots and previews of the demo store will be added here.
-
----
-
-## 🗂️ Tech Stack
-
-* ⚛️ Remix + Hydrogen
-* 🌊 Fluid starter
-* 🧠 Sanity CMS
-* ☁️ AWS services for product customization
-* 🎨 Tailored minimal design
-
----
-
-## 📜 License
-
-MIT © 2025 allen.dev
-
-> Based on [Fluid](https://github.com/…) (MIT)
+MIT © 2025 Allen
