@@ -3364,7 +3364,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "dropdownCountrySelector"
+          "name": "countrySelector"
         },
         "optional": true
       },
@@ -4389,6 +4389,50 @@
     }
   },
   {
+    "name": "internationalizedArrayLinks",
+    "type": "type",
+    "value": {
+      "type": "array",
+      "of": {
+        "type": "object",
+        "attributes": {
+          "_key": {
+            "type": "objectAttribute",
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        "rest": {
+          "type": "inline",
+          "name": "internationalizedArrayLinksValue"
+        }
+      }
+    }
+  },
+  {
+    "name": "internationalizedArrayAnnouncementBar",
+    "type": "type",
+    "value": {
+      "type": "array",
+      "of": {
+        "type": "object",
+        "attributes": {
+          "_key": {
+            "type": "objectAttribute",
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        "rest": {
+          "type": "inline",
+          "name": "internationalizedArrayAnnouncementBarValue"
+        }
+      }
+    }
+  },
+  {
     "name": "dropdownCountrySelector",
     "type": "type",
     "value": {
@@ -4540,50 +4584,6 @@
             }
           },
           "optional": true
-        }
-      }
-    }
-  },
-  {
-    "name": "internationalizedArrayLinks",
-    "type": "type",
-    "value": {
-      "type": "array",
-      "of": {
-        "type": "object",
-        "attributes": {
-          "_key": {
-            "type": "objectAttribute",
-            "value": {
-              "type": "string"
-            }
-          }
-        },
-        "rest": {
-          "type": "inline",
-          "name": "internationalizedArrayLinksValue"
-        }
-      }
-    }
-  },
-  {
-    "name": "internationalizedArrayAnnouncementBar",
-    "type": "type",
-    "value": {
-      "type": "array",
-      "of": {
-        "type": "object",
-        "attributes": {
-          "_key": {
-            "type": "objectAttribute",
-            "value": {
-              "type": "string"
-            }
-          }
-        },
-        "rest": {
-          "type": "inline",
-          "name": "internationalizedArrayAnnouncementBarValue"
         }
       }
     }

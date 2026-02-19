@@ -500,7 +500,7 @@ export type Header = {
   announcementBar?: InternationalizedArrayAnnouncementBar;
   announcementBarUtilityLinks?: InternationalizedArrayLinks;
   showAnnouncementBarLocaleSelector?: boolean;
-  announcementBarLocaleSelector?: DropdownCountrySelector;
+  announcementBarLocaleSelector?: CountrySelector;
   announcementBarColorScheme?: {
     _ref: string;
     _type: 'reference';
@@ -607,6 +607,18 @@ export type Padding = {
   bottom?: RangeSlider;
 };
 
+export type InternationalizedArrayLinks = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayLinksValue
+>;
+
+export type InternationalizedArrayAnnouncementBar = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayAnnouncementBarValue
+>;
+
 export type DropdownCountrySelector = {
   _type: 'dropdownCountrySelector';
   triggerVariant?: 'icon' | 'flag' | 'flag-country' | 'flag-country-lang';
@@ -624,18 +636,6 @@ export type DropdownCountrySelector = {
     borderWidth?: RangeSlider;
   };
 };
-
-export type InternationalizedArrayLinks = Array<
-  {
-    _key: string;
-  } & InternationalizedArrayLinksValue
->;
-
-export type InternationalizedArrayAnnouncementBar = Array<
-  {
-    _key: string;
-  } & InternationalizedArrayAnnouncementBarValue
->;
 
 export type ModalConfig = {
   _type: 'modalConfig';
@@ -1813,9 +1813,9 @@ export type AllSanitySchemaTypes =
   | CountrySelector
   | SeparatorLine
   | Padding
-  | DropdownCountrySelector
   | InternationalizedArrayLinks
   | InternationalizedArrayAnnouncementBar
+  | DropdownCountrySelector
   | ModalConfig
   | SidebarConfig
   | InternationalizedArrayHeaderNavigation
@@ -6381,20 +6381,45 @@ export type ROOT_QUERYResult = {
           } | null;
         } | null;
       } | null;
-      displayModeKind: null;
-      mode: null;
-      modeBase: null;
-      modeSm: null;
-      modeMd: null;
-      modeLg: null;
+      displayModeKind: 'responsive' | 'single' | null;
+      mode: 'dropdown' | 'modal' | 'sidebar' | null;
+      modeBase: 'dropdown' | 'modal' | 'sidebar' | null;
+      modeSm: 'dropdown' | 'modal' | 'sidebar' | null;
+      modeMd: 'dropdown' | 'modal' | 'sidebar' | null;
+      modeLg: 'dropdown' | 'modal' | 'sidebar' | null;
       dropdownConfig: {
         borderRadius: 'lg' | 'md' | 'none' | 'sm' | 'xl' | null;
         shadow: 'lg' | 'md' | 'none' | 'sm' | null;
         showBorder: boolean | null;
         borderWidth: RangeSlider | null;
       } | null;
-      sidebarConfig: null;
-      modalConfig: null;
+      sidebarConfig: {
+        position: 'left' | 'right' | null;
+        width: RangeSlider | null;
+        maxWidth: RangeSlider | null;
+        fullWidthBelow: 'lg' | 'md' | 'never' | 'sm' | null;
+        animation: 'none' | 'slide' | 'slideFade' | null;
+        animationDuration: RangeSlider | null;
+        overlayOpacity: RangeSlider | null;
+      } | null;
+      modalConfig: {
+        insetX: RangeSlider | null;
+        insetY: RangeSlider | null;
+        maxWidth: RangeSlider | null;
+        maxHeight: RangeSlider | null;
+        fullScreenBelow: 'lg' | 'md' | 'never' | 'sm' | null;
+        borderRadius: 'lg' | 'md' | 'none' | 'sm' | 'xl' | null;
+        borderRadiusOnFullScreen: 'keep' | 'none' | null;
+        animation:
+          | 'fade'
+          | 'none'
+          | 'scale'
+          | 'slideBottom'
+          | 'slideTop'
+          | null;
+        animationDuration: RangeSlider | null;
+        overlayOpacity: RangeSlider | null;
+      } | null;
     } | null;
     announcementBarColorScheme: {
       background: {

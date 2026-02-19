@@ -2,44 +2,56 @@ import * as Select from '@radix-ui/react-select';
 import {ChevronDown, ChevronUp} from 'lucide-react';
 import {cn} from '~/lib/utils';
 import {LocaleFlag} from './locale-flag';
-import type {I18nLocale} from 'types';
 
-interface LocaleCountrySelectProps {
-  countries: I18nLocale[];
+export interface LocaleSelectOption {
   value: string;
-  onChange: (country: string) => void;
+  label: string;
+  /** If provided, renders a flag before the label */
+  countryCode?: string;
+}
+
+interface LocaleSelectProps {
+  options: LocaleSelectOption[];
+  value: string;
+  onChange: (value: string) => void;
+  id?: string;
+  ariaLabel?: string;
 }
 
 /**
- * Custom country select with flag icons per option.
- * Uses Radix Select for full accessibility (keyboard nav, screen readers, mobile).
- * Replaces the native <select> for country picking in LocaleForm.
+ * Generic accessible select using Radix Select.
+ * Optionally renders a flag per option when countryCode is provided.
  *
- * Language select stays native — text only, few options, not worth the complexity.
+ * Used for both country and language picking in LocaleForm:
+ * - Country: pass countryCode per option → renders flag + label
+ * - Language: omit countryCode → renders label only
  */
-export function LocaleCountrySelect({
-  countries,
+export function LocaleSelect({
+  options,
   value,
   onChange,
-}: LocaleCountrySelectProps) {
-  const current = countries.find((c) => c.country === value);
+  id,
+  ariaLabel,
+}: LocaleSelectProps) {
+  const current = options.find((o) => o.value === value);
 
   return (
     <Select.Root value={value} onValueChange={onChange}>
       {/* ── Trigger ─────────────────────────────────────────────────────── */}
       <Select.Trigger
+        id={id}
         className={cn(
           'flex w-full items-center justify-between gap-2',
           'rounded-md border bg-transparent px-3 py-1.5',
           'text-sm focus:outline-none',
-          'data-placeholder:text-muted-foreground',
+          'data-[placeholder]:text-muted-foreground',
         )}
-        aria-label="Select country"
+        aria-label={ariaLabel}
       >
         <span className="flex items-center gap-2 truncate">
-          {current && (
+          {current?.countryCode && (
             <LocaleFlag
-              countryCode={current.country}
+              countryCode={current.countryCode}
               size={18}
               className="shrink-0"
             />
@@ -57,7 +69,7 @@ export function LocaleCountrySelect({
           position="popper"
           sideOffset={4}
           className={cn(
-            'z-100 w-(--radix-select-trigger-width)',
+            'z-[100] w-[var(--radix-select-trigger-width)]',
             'max-h-[min(280px,var(--radix-select-content-available-height))]',
             'overflow-hidden rounded-md border bg-background shadow-md',
           )}
@@ -67,24 +79,26 @@ export function LocaleCountrySelect({
           </Select.ScrollUpButton>
 
           <Select.Viewport className="p-1">
-            {countries.map((locale) => (
+            {options.map((option) => (
               <Select.Item
-                key={locale.country}
-                value={locale.country}
+                key={option.value}
+                value={option.value}
                 className={cn(
                   'flex cursor-pointer items-center gap-2 select-none',
                   'rounded-sm px-2 py-1.5 text-sm outline-none',
-                  'data-highlighted:bg-accent data-highlighted:text-accent-foreground',
+                  'data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground',
                   'data-[state=checked]:font-medium',
                 )}
               >
-                <LocaleFlag
-                  countryCode={locale.country}
-                  size={18}
-                  className="shrink-0"
-                />
+                {option.countryCode && (
+                  <LocaleFlag
+                    countryCode={option.countryCode}
+                    size={18}
+                    className="shrink-0"
+                  />
+                )}
                 {/* ItemText is what screen readers and Radix use for value matching */}
-                <Select.ItemText>{locale.label}</Select.ItemText>
+                <Select.ItemText>{option.label}</Select.ItemText>
               </Select.Item>
             ))}
           </Select.Viewport>

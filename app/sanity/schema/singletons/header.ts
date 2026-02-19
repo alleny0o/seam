@@ -545,7 +545,7 @@ export default defineType({
     defineField({
       name: 'announcementBarLocaleSelector',
       title: 'Locale selector',
-      type: 'dropdownCountrySelector', // was: 'countrySelector'
+      type: 'countrySelector',
       group: 'announcementBar',
       hidden: ({parent}) => !parent?.showAnnouncementBarLocaleSelector,
     }),
