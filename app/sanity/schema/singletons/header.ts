@@ -509,7 +509,7 @@ export default defineType({
     defineField({
       name: 'mobileLocaleSelector',
       title: 'Locale selector',
-      type: 'dropdownCountrySelector', // was: 'countrySelector'
+      type: 'countrySelectorPopover',
       group: 'mobileNavigation',
       hidden: ({parent}) => !parent?.showMobileLocaleSelector,
     }),

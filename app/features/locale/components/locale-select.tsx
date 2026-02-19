@@ -25,6 +25,10 @@ interface LocaleSelectProps {
  * Used for both country and language picking in LocaleForm:
  * - Country: pass countryCode per option → renders flag + label
  * - Language: omit countryCode → renders label only
+ *
+ * Styling consumes global settings CSS vars written by useSettingsCssVars:
+ * - Trigger uses --input-border-* vars
+ * - Content panel uses --dropdown-popup-border-* and --dropdown-popup-shadow-* vars
  */
 export function LocaleSelect({
   options,
@@ -42,10 +46,16 @@ export function LocaleSelect({
         id={id}
         className={cn(
           'flex w-full items-center justify-between gap-2',
-          'rounded-md border bg-transparent px-3 py-1.5',
+          'bg-transparent px-3 py-1.5',
           'text-sm focus:outline-none',
-          'data-[placeholder]:text-muted-foreground',
+          'data-placeholder:text-muted-foreground',
         )}
+        style={{
+          borderWidth: 'var(--input-border-thickness)',
+          borderStyle: 'solid',
+          borderColor: `rgb(var(--border) / var(--input-border-opacity))`,
+          borderRadius: 'var(--input-border-corner-radius)',
+        }}
         aria-label={ariaLabel}
       >
         <span className="flex items-center gap-2 truncate">
@@ -69,10 +79,17 @@ export function LocaleSelect({
           position="popper"
           sideOffset={4}
           className={cn(
-            'z-[100] w-[var(--radix-select-trigger-width)]',
+            'z-100 w-(--radix-select-trigger-width)',
             'max-h-[min(280px,var(--radix-select-content-available-height))]',
-            'overflow-hidden rounded-md border bg-background shadow-md',
+            'overflow-hidden bg-background',
           )}
+          style={{
+            borderWidth: 'var(--dropdown-popup-border-thickness)',
+            borderStyle: 'solid',
+            borderColor: `rgb(var(--border) / var(--dropdown-popup-border-opacity))`,
+            borderRadius: 'var(--dropdown-popup-border-corner-radius)',
+            boxShadow: `var(--dropdown-popup-shadow-horizontal-offset) var(--dropdown-popup-shadow-vertical-offset) var(--dropdown-popup-shadow-blur-radius) rgb(var(--shadow) / var(--dropdown-popup-shadow-opacity))`,
+          }}
         >
           <Select.ScrollUpButton className="flex items-center justify-center py-1 text-muted-foreground">
             <ChevronUp size={14} aria-hidden />
@@ -86,7 +103,7 @@ export function LocaleSelect({
                 className={cn(
                   'flex cursor-pointer items-center gap-2 select-none',
                   'rounded-sm px-2 py-1.5 text-sm outline-none',
-                  'data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground',
+                  'data-highlighted:bg-accent data-highlighted:text-accent-foreground',
                   'data-[state=checked]:font-medium',
                 )}
               >
@@ -97,7 +114,6 @@ export function LocaleSelect({
                     className="shrink-0"
                   />
                 )}
-                {/* ItemText is what screen readers and Radix use for value matching */}
                 <Select.ItemText>{option.label}</Select.ItemText>
               </Select.Item>
             ))}

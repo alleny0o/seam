@@ -3333,7 +3333,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "dropdownCountrySelector"
+          "name": "countrySelectorPopover"
         },
         "optional": true
       },
@@ -3877,7 +3877,7 @@
             "of": [
               {
                 "type": "string",
-                "value": "dropdown"
+                "value": "popover"
               },
               {
                 "type": "string",
@@ -3898,7 +3898,7 @@
             "of": [
               {
                 "type": "string",
-                "value": "dropdown"
+                "value": "popover"
               },
               {
                 "type": "string",
@@ -3919,7 +3919,7 @@
             "of": [
               {
                 "type": "string",
-                "value": "dropdown"
+                "value": "popover"
               },
               {
                 "type": "string",
@@ -3940,7 +3940,7 @@
             "of": [
               {
                 "type": "string",
-                "value": "dropdown"
+                "value": "popover"
               },
               {
                 "type": "string",
@@ -3961,7 +3961,7 @@
             "of": [
               {
                 "type": "string",
-                "value": "dropdown"
+                "value": "popover"
               },
               {
                 "type": "string",
@@ -3975,7 +3975,7 @@
           },
           "optional": true
         },
-        "dropdownConfig": {
+        "popoverConfig": {
           "type": "objectAttribute",
           "value": {
             "type": "object",
@@ -4433,7 +4433,7 @@
     }
   },
   {
-    "name": "dropdownCountrySelector",
+    "name": "countrySelectorPopover",
     "type": "type",
     "value": {
       "type": "object",
@@ -4442,7 +4442,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "dropdownCountrySelector"
+            "value": "countrySelectorPopover"
           }
         },
         "triggerVariant": {
@@ -4507,7 +4507,7 @@
           },
           "optional": true
         },
-        "dropdownConfig": {
+        "popoverConfig": {
           "type": "objectAttribute",
           "value": {
             "type": "object",
@@ -8275,7 +8275,7 @@
     }
   },
   {
-    "name": "dropdownConfig",
+    "name": "popoverConfig",
     "type": "type",
     "value": {
       "type": "object",
@@ -8284,7 +8284,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "dropdownConfig"
+            "value": "popoverConfig"
           }
         },
         "borderRadius": {

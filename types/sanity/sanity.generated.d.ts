@@ -496,7 +496,7 @@ export type Header = {
   mobileMegaMenuLinkBackgroundProperty?: 'background' | 'card' | 'primary';
   mobileNavigationSeparatorLine?: SeparatorLine;
   showMobileLocaleSelector?: boolean;
-  mobileLocaleSelector?: DropdownCountrySelector;
+  mobileLocaleSelector?: CountrySelectorPopover;
   announcementBar?: InternationalizedArrayAnnouncementBar;
   announcementBarUtilityLinks?: InternationalizedArrayLinks;
   showAnnouncementBarLocaleSelector?: boolean;
@@ -560,12 +560,12 @@ export type CountrySelector = {
     [internalGroqTypeReferenceTo]?: 'colorScheme';
   };
   displayModeKind?: 'single' | 'responsive';
-  mode?: 'dropdown' | 'modal' | 'sidebar';
-  modeBase?: 'dropdown' | 'modal' | 'sidebar';
-  modeSm?: 'dropdown' | 'modal' | 'sidebar';
-  modeMd?: 'dropdown' | 'modal' | 'sidebar';
-  modeLg?: 'dropdown' | 'modal' | 'sidebar';
-  dropdownConfig?: {
+  mode?: 'popover' | 'modal' | 'sidebar';
+  modeBase?: 'popover' | 'modal' | 'sidebar';
+  modeSm?: 'popover' | 'modal' | 'sidebar';
+  modeMd?: 'popover' | 'modal' | 'sidebar';
+  modeLg?: 'popover' | 'modal' | 'sidebar';
+  popoverConfig?: {
     borderRadius?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
     shadow?: 'none' | 'sm' | 'md' | 'lg';
     showBorder?: boolean;
@@ -619,8 +619,8 @@ export type InternationalizedArrayAnnouncementBar = Array<
   } & InternationalizedArrayAnnouncementBarValue
 >;
 
-export type DropdownCountrySelector = {
-  _type: 'dropdownCountrySelector';
+export type CountrySelectorPopover = {
+  _type: 'countrySelectorPopover';
   triggerVariant?: 'icon' | 'flag' | 'flag-country' | 'flag-country-lang';
   showChevron?: boolean;
   colorScheme?: {
@@ -629,7 +629,7 @@ export type DropdownCountrySelector = {
     _weak?: boolean;
     [internalGroqTypeReferenceTo]?: 'colorScheme';
   };
-  dropdownConfig?: {
+  popoverConfig?: {
     borderRadius?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
     shadow?: 'none' | 'sm' | 'md' | 'lg';
     showBorder?: boolean;
@@ -1234,8 +1234,8 @@ export type ExternalLink = {
 
 export type Anchor = string;
 
-export type DropdownConfig = {
-  _type: 'dropdownConfig';
+export type PopoverConfig = {
+  _type: 'popoverConfig';
   borderRadius?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
   shadow?: 'none' | 'sm' | 'md' | 'lg';
   showBorder?: boolean;
@@ -1815,7 +1815,7 @@ export type AllSanitySchemaTypes =
   | Padding
   | InternationalizedArrayLinks
   | InternationalizedArrayAnnouncementBar
-  | DropdownCountrySelector
+  | CountrySelectorPopover
   | ModalConfig
   | SidebarConfig
   | InternationalizedArrayHeaderNavigation
@@ -1854,7 +1854,7 @@ export type AllSanitySchemaTypes =
   | HeaderNavigation
   | ExternalLink
   | Anchor
-  | DropdownConfig
+  | PopoverConfig
   | Seo
   | ProductSections
   | CollectionSections
@@ -6382,17 +6382,12 @@ export type ROOT_QUERYResult = {
         } | null;
       } | null;
       displayModeKind: 'responsive' | 'single' | null;
-      mode: 'dropdown' | 'modal' | 'sidebar' | null;
-      modeBase: 'dropdown' | 'modal' | 'sidebar' | null;
-      modeSm: 'dropdown' | 'modal' | 'sidebar' | null;
-      modeMd: 'dropdown' | 'modal' | 'sidebar' | null;
-      modeLg: 'dropdown' | 'modal' | 'sidebar' | null;
-      dropdownConfig: {
-        borderRadius: 'lg' | 'md' | 'none' | 'sm' | 'xl' | null;
-        shadow: 'lg' | 'md' | 'none' | 'sm' | null;
-        showBorder: boolean | null;
-        borderWidth: RangeSlider | null;
-      } | null;
+      mode: 'modal' | 'popover' | 'sidebar' | null;
+      modeBase: 'modal' | 'popover' | 'sidebar' | null;
+      modeSm: 'modal' | 'popover' | 'sidebar' | null;
+      modeMd: 'modal' | 'popover' | 'sidebar' | null;
+      modeLg: 'modal' | 'popover' | 'sidebar' | null;
+      dropdownConfig: null;
       sidebarConfig: {
         position: 'left' | 'right' | null;
         width: RangeSlider | null;
@@ -8325,12 +8320,7 @@ export type ROOT_QUERYResult = {
           } | null;
         } | null;
       } | null;
-      dropdownConfig: {
-        borderRadius: 'lg' | 'md' | 'none' | 'sm' | 'xl' | null;
-        shadow: 'lg' | 'md' | 'none' | 'sm' | null;
-        showBorder: boolean | null;
-        borderWidth: RangeSlider | null;
-      } | null;
+      dropdownConfig: null;
     } | null;
     colorScheme: {
       background: {
@@ -8558,17 +8548,12 @@ export type ROOT_QUERYResult = {
         } | null;
       } | null;
       displayModeKind: 'responsive' | 'single' | null;
-      mode: 'dropdown' | 'modal' | 'sidebar' | null;
-      modeBase: 'dropdown' | 'modal' | 'sidebar' | null;
-      modeSm: 'dropdown' | 'modal' | 'sidebar' | null;
-      modeMd: 'dropdown' | 'modal' | 'sidebar' | null;
-      modeLg: 'dropdown' | 'modal' | 'sidebar' | null;
-      dropdownConfig: {
-        borderRadius: 'lg' | 'md' | 'none' | 'sm' | 'xl' | null;
-        shadow: 'lg' | 'md' | 'none' | 'sm' | null;
-        showBorder: boolean | null;
-        borderWidth: RangeSlider | null;
-      } | null;
+      mode: 'modal' | 'popover' | 'sidebar' | null;
+      modeBase: 'modal' | 'popover' | 'sidebar' | null;
+      modeSm: 'modal' | 'popover' | 'sidebar' | null;
+      modeMd: 'modal' | 'popover' | 'sidebar' | null;
+      modeLg: 'modal' | 'popover' | 'sidebar' | null;
+      dropdownConfig: null;
       sidebarConfig: {
         position: 'left' | 'right' | null;
         width: RangeSlider | null;

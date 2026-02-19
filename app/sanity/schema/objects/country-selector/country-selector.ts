@@ -1,5 +1,5 @@
 import {defineField} from 'sanity';
-import dropdownConfig from '../aside/dropdown-config';
+import popoverConfig from '../aside/popover-config';
 import sidebarConfig from '../aside/sidebar-config';
 import modalConfig from '../aside/modal-config';
 
@@ -84,13 +84,13 @@ export default defineField({
       description: 'How the locale selector opens on all screen sizes',
       options: {
         list: [
-          {title: 'Dropdown', value: 'dropdown'},
+          {title: 'Popover', value: 'popover'},
           {title: 'Modal', value: 'modal'},
           {title: 'Sidebar', value: 'sidebar'},
         ],
         layout: 'radio',
       },
-      initialValue: 'dropdown',
+      initialValue: 'popover',
       hidden: ({parent}) => {
         const p = parent as Record<string, string | undefined>;
         return p?.displayModeKind !== 'single';
@@ -112,7 +112,7 @@ export default defineField({
       type: 'string',
       options: {
         list: [
-          {title: 'Dropdown', value: 'dropdown'},
+          {title: 'Popover', value: 'popover'},
           {title: 'Modal', value: 'modal'},
           {title: 'Sidebar', value: 'sidebar'},
         ],
@@ -139,7 +139,7 @@ export default defineField({
       description: 'Leave blank to inherit from base',
       options: {
         list: [
-          {title: 'Dropdown', value: 'dropdown'},
+          {title: 'Popover', value: 'popover'},
           {title: 'Modal', value: 'modal'},
           {title: 'Sidebar', value: 'sidebar'},
         ],
@@ -157,7 +157,7 @@ export default defineField({
       description: 'Leave blank to inherit from sm',
       options: {
         list: [
-          {title: 'Dropdown', value: 'dropdown'},
+          {title: 'Popover', value: 'popover'},
           {title: 'Modal', value: 'modal'},
           {title: 'Sidebar', value: 'sidebar'},
         ],
@@ -175,7 +175,7 @@ export default defineField({
       description: 'Leave blank to inherit from md',
       options: {
         list: [
-          {title: 'Dropdown', value: 'dropdown'},
+          {title: 'Popover', value: 'popover'},
           {title: 'Modal', value: 'modal'},
           {title: 'Sidebar', value: 'sidebar'},
         ],
@@ -191,14 +191,14 @@ export default defineField({
     // CONTAINER CONFIGS
     // ============================================================================
     defineField({
-      ...dropdownConfig,
-      name: 'dropdownConfig',
-      title: 'Dropdown configuration',
+      ...popoverConfig,
+      name: 'popoverConfig',
+      title: 'Popover configuration',
       hidden: ({parent}) => {
         const p = parent as Record<string, string | undefined>;
-        if (p?.displayModeKind === 'single') return p?.mode !== 'dropdown';
+        if (p?.displayModeKind === 'single') return p?.mode !== 'popover';
         return !['modeBase', 'modeSm', 'modeMd', 'modeLg'].some(
-          (key) => p?.[key] === 'dropdown',
+          (key) => p?.[key] === 'popover',
         );
       },
     }),
@@ -221,7 +221,7 @@ export default defineField({
       hidden: ({parent}) => {
         const p = parent as Record<string, string | undefined>;
         if (p?.displayModeKind === 'single') return p?.mode !== 'modal';
-        return !['modeBase', 'modeSm', 'modeMd', 'modeLg'].some(
+        return !['modeBase', 'modeMd', 'modeLg'].some(
           (key) => p?.[key] === 'modal',
         );
       },

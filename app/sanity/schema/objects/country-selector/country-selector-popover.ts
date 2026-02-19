@@ -1,18 +1,18 @@
 import {defineField} from 'sanity';
-import dropdownConfig from '../aside/dropdown-config';
+import popoverConfig from '../aside/popover-config';
 
 /**
- * DROPDOWN COUNTRY SELECTOR
- * Simplified locale selector config that only supports dropdown mode.
- * Used in mobile navigation where a dropdown is the only sensible UI pattern
+ * COUNTRY SELECTOR (POPOVER ONLY)
+ * Simplified locale selector config that only supports popover mode.
+ * Used in mobile navigation where a popover is the only sensible UI pattern
  * (since the selector is already inside a drawer/modal).
  *
  * This removes all display mode options and sidebar/modal configs,
- * keeping only the trigger, color, and dropdown-specific settings.
+ * keeping only the trigger, color, and popover-specific settings.
  */
 export default defineField({
-  name: 'dropdownCountrySelector',
-  title: 'Locale Selector (Dropdown Only)',
+  name: 'countrySelectorPopover',
+  title: 'Locale Selector (Popover Only)',
   type: 'object',
   options: {
     collapsible: true,
@@ -59,12 +59,12 @@ export default defineField({
     }),
 
     // ============================================================================
-    // DROPDOWN CONFIG
+    // POPOVER CONFIG
     // ============================================================================
     defineField({
-      ...dropdownConfig,
-      name: 'dropdownConfig',
-      title: 'Dropdown configuration',
+      ...popoverConfig,
+      name: 'popoverConfig',
+      title: 'Popover configuration',
     }),
   ],
 });

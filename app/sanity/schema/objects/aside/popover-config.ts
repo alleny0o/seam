@@ -1,13 +1,13 @@
 import {defineField} from 'sanity';
 
 /**
- * DROPDOWN CONFIG
- * Configuration for inline dropdown panels (locale selector, etc).
+ * POPOVER CONFIG
+ * Configuration for inline popover panels (locale selector, etc).
  * Width is intentionally omitted — Radix Popover handles sizing automatically.
  */
 export default defineField({
-  name: 'dropdownConfig',
-  title: 'Dropdown Configuration',
+  name: 'popoverConfig',
+  title: 'Popover Configuration',
   type: 'object',
   options: {
     collapsible: true,

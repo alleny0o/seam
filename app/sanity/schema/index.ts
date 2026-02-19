@@ -42,9 +42,9 @@ import sectionsList, {
 
 /**
  * ASIDE OBJECTS
- * Configuration for overlay UI patterns (sidebars, modals, dropdowns).
+ * Configuration for overlay UI patterns (sidebars, modals, popovers).
  */
-import dropdownConfig from './objects/aside/dropdown-config';
+import popoverConfig from './objects/aside/popover-config';
 import modalConfig from './objects/aside/modal-config';
 import sidebarConfig from './objects/aside/sidebar-config';
 
@@ -53,7 +53,7 @@ import sidebarConfig from './objects/aside/sidebar-config';
  * Locale/country selector configuration.
  */
 import countrySelector from './objects/country-selector/country-selector';
-import dropdownCountrySelector from './objects/country-selector/dropdown-country-selector';
+import countrySelectorPopover from './objects/country-selector/country-selector-popover';
 
 /**
  * NAVIGATION OBJECTS
@@ -186,13 +186,13 @@ const objects = [
   seo,
 
   /* Aside */
-  dropdownConfig,
+  popoverConfig,
   modalConfig,
   sidebarConfig,
 
   /* Country Selector */
   countrySelector,
-  dropdownCountrySelector,
+  countrySelectorPopover,
 
   /* Navigation */
   anchor,
