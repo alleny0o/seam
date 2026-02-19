@@ -4,9 +4,11 @@ A configurable Shopify Hydrogen theme built on the Fluid starter.
 
 ![Seam](docs/assets/preview.png)
 
-## Demo
+Take a look at the demo [here](https://youtube.com).
 
-Take a look at the demo [here](https://youtube.com) and the documentation [here](https://fluid.frontvibe.com).
+## Documentation
+
+Visit [seam-docs.com](https://seam-docs.com) to read the documentation.
 
 ## Credits
 
