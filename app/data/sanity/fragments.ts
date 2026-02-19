@@ -47,7 +47,7 @@ export const COLOR_SCHEME_FRAGMENT = defineQuery(`{
  * Reusable fragments for drawer and overlay UI configuration.
  * Used by mobile navigation, cart drawer, search drawer, locale selector, etc.
  */
-export const DROPDOWN_CONFIG_FRAGMENT = defineQuery(`{
+export const POPOVER_CONFIG_FRAGMENT = defineQuery(`{
   borderRadius,
   shadow,
   showBorder,
@@ -83,7 +83,7 @@ export const MODAL_CONFIG_FRAGMENT = defineQuery(`{
  *
  * Fetches trigger appearance (variant + chevron), color scheme,
  * display mode (single or responsive per breakpoint), and the embedded
- * dropdown/sidebar/modal configs used when the selector opens.
+ * popover/sidebar/modal configs used when the selector opens.
  *
  * Used in two placements:
  * - Header actions area (headerLocaleSelector)
@@ -101,26 +101,26 @@ export const LOCALE_SELECTOR_FRAGMENT = defineQuery(`{
   modeSm,
   modeMd,
   modeLg,
-  dropdownConfig ${DROPDOWN_CONFIG_FRAGMENT},
+  popoverConfig ${POPOVER_CONFIG_FRAGMENT},
   sidebarConfig ${SIDEBAR_CONFIG_FRAGMENT},
   modalConfig ${MODAL_CONFIG_FRAGMENT},
 }`);
 
 /**
- * DROPDOWN COUNTRY SELECTOR FRAGMENT
- * Simplified locale selector config that only supports dropdown mode.
+ * POPOVER COUNTRY SELECTOR FRAGMENT
+ * Simplified locale selector config that only supports popover mode.
  *
- * Used in mobile navigation where a dropdown is the only sensible UI pattern
+ * Used in mobile navigation where a popover is the only sensible UI pattern
  * (since the selector is already inside a drawer/modal). No display mode options,
- * no sidebar/modal configs — just trigger, color, and dropdown styling.
+ * no sidebar/modal configs — just trigger, color, and popover styling.
  *
- * Resolved to a fully typed DropdownCountrySelectorConfig via resolveDropdownCountrySelectorConfig().
+ * Resolved to a fully typed DropdownLocaleSelectorConfig via resolveDropdownLocaleSelectorConfig().
  */
-export const DROPDOWN_COUNTRY_SELECTOR_FRAGMENT = defineQuery(`{
+export const POPOVER_COUNTRY_SELECTOR_FRAGMENT = defineQuery(`{
   triggerVariant,
   showChevron,
   colorScheme -> ${COLOR_SCHEME_FRAGMENT},
-  dropdownConfig ${DROPDOWN_CONFIG_FRAGMENT},
+  popoverConfig ${POPOVER_CONFIG_FRAGMENT},
 }`);
 
 /**
@@ -537,9 +537,9 @@ export const HEADER_FRAGMENT = defineQuery(`{
     height,
   },
 
-  // Locale selector (dropdown only)
+  // Locale selector (popover only)
   showMobileLocaleSelector,
-  mobileLocaleSelector ${DROPDOWN_COUNTRY_SELECTOR_FRAGMENT},
+  mobileLocaleSelector ${POPOVER_COUNTRY_SELECTOR_FRAGMENT},
 
   // ─────────────────────────────────────────────────────────────────────────
   // HEADER APPEARANCE
