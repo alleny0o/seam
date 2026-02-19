@@ -1,22 +1,22 @@
 import {stegaClean} from '@sanity/client/stega';
 import type {
   LocaleSelectorConfig,
-  DropdownLocaleSelectorConfig,
+  PopoverLocaleSelectorConfig,
   SelectorMode,
   DisplayMode,
   TriggerVariant,
-  RawDropdownConfig,
+  RawPopoverConfig,
   RawColorScheme,
 } from '../types';
 import {
   LOCALE_SELECTOR_DEFAULTS,
-  DROPDOWN_LOCALE_SELECTOR_DEFAULTS,
+  POPOVER_LOCALE_SELECTOR_DEFAULTS,
 } from '../constants';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // RAW SANITY SHAPES
 // Flat fields as returned by LOCALE_SELECTOR_FRAGMENT and
-// DROPDOWN_COUNTRY_SELECTOR_FRAGMENT respectively.
+// POPOVER_COUNTRY_SELECTOR_FRAGMENT respectively.
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
@@ -37,7 +37,7 @@ export type RawSanityLocaleSelectorConfig =
       modeMd?: string | null;
       modeLg?: string | null;
       // Container configs
-      dropdownConfig?: RawDropdownConfig;
+      popoverConfig?: RawPopoverConfig;
       sidebarConfig?: Record<string, unknown> | null;
       modalConfig?: Record<string, unknown> | null;
     }
@@ -45,16 +45,16 @@ export type RawSanityLocaleSelectorConfig =
   | undefined;
 
 /**
- * Raw shape from DROPDOWN_COUNTRY_SELECTOR_FRAGMENT.
+ * Raw shape from POPOVER_COUNTRY_SELECTOR_FRAGMENT.
  * Used for the mobile placement — no display mode fields.
  */
-export type RawSanityDropdownLocaleSelectorConfig =
+export type RawSanityPopoverLocaleSelectorConfig =
   | {
       triggerVariant?: string | null;
       showChevron?: boolean | null;
       // Color scheme — already resolved via -> projection in GROQ
       colorScheme?: RawColorScheme;
-      dropdownConfig?: RawDropdownConfig;
+      popoverConfig?: RawPopoverConfig;
     }
   | null
   | undefined;
@@ -82,7 +82,7 @@ function cleanTriggerVariant(
 
 function cleanMode(value: string | null | undefined): SelectorMode | null {
   const cleaned = stegaClean(value);
-  if (cleaned === 'dropdown' || cleaned === 'modal' || cleaned === 'sidebar') {
+  if (cleaned === 'popover' || cleaned === 'modal' || cleaned === 'sidebar') {
     return cleaned;
   }
   return null;
@@ -96,7 +96,7 @@ function resolveDisplayMode(
   if (kind === 'responsive') {
     return {
       kind: 'responsive',
-      base: cleanMode(raw.modeBase) ?? 'dropdown',
+      base: cleanMode(raw.modeBase) ?? 'popover',
       sm: cleanMode(raw.modeSm) ?? undefined,
       md: cleanMode(raw.modeMd) ?? undefined,
       lg: cleanMode(raw.modeLg) ?? undefined,
@@ -106,7 +106,7 @@ function resolveDisplayMode(
   // Default: single
   return {
     kind: 'single',
-    mode: cleanMode(raw.mode) ?? 'dropdown',
+    mode: cleanMode(raw.mode) ?? 'popover',
   };
 }
 
@@ -136,33 +136,33 @@ export function resolveLocaleSelectorConfig(
     showChevron: raw.showChevron ?? LOCALE_SELECTOR_DEFAULTS.showChevron,
     colorScheme: raw.colorScheme ?? null,
     displayMode: resolveDisplayMode(raw),
-    dropdownConfig: raw.dropdownConfig ?? null,
+    popoverConfig: raw.popoverConfig ?? null,
     sidebarConfig: raw.sidebarConfig ?? null,
     modalConfig: raw.modalConfig ?? null,
   };
 }
 
 /**
- * Resolves raw Sanity dropdown-only locale selector config into a fully typed
- * DropdownLocaleSelectorConfig with no nulls.
+ * Resolves raw Sanity popover-only locale selector config into a fully typed
+ * PopoverLocaleSelectorConfig with no nulls.
  *
- * For the mobile placement only. No display mode logic — always dropdown.
+ * For the mobile placement only. No display mode logic — always popover.
  *
- * @param raw - Raw data from DROPDOWN_COUNTRY_SELECTOR_FRAGMENT
- * @returns Fully resolved DropdownLocaleSelectorConfig
+ * @param raw - Raw data from POPOVER_COUNTRY_SELECTOR_FRAGMENT
+ * @returns Fully resolved PopoverLocaleSelectorConfig
  */
-export function resolveDropdownLocaleSelectorConfig(
-  raw: RawSanityDropdownLocaleSelectorConfig,
-): DropdownLocaleSelectorConfig {
-  if (!raw) return DROPDOWN_LOCALE_SELECTOR_DEFAULTS;
+export function resolvePopoverLocaleSelectorConfig(
+  raw: RawSanityPopoverLocaleSelectorConfig,
+): PopoverLocaleSelectorConfig {
+  if (!raw) return POPOVER_LOCALE_SELECTOR_DEFAULTS;
 
   return {
     triggerVariant:
       cleanTriggerVariant(raw.triggerVariant) ??
-      DROPDOWN_LOCALE_SELECTOR_DEFAULTS.triggerVariant,
+      POPOVER_LOCALE_SELECTOR_DEFAULTS.triggerVariant,
     showChevron:
-      raw.showChevron ?? DROPDOWN_LOCALE_SELECTOR_DEFAULTS.showChevron,
+      raw.showChevron ?? POPOVER_LOCALE_SELECTOR_DEFAULTS.showChevron,
     colorScheme: raw.colorScheme ?? null,
-    dropdownConfig: raw.dropdownConfig ?? null,
+    popoverConfig: raw.popoverConfig ?? null,
   };
 }

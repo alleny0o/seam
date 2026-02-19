@@ -19,7 +19,7 @@ export type TriggerVariant =
 // ============================================================================
 
 /** The three container types */
-export type SelectorMode = 'dropdown' | 'modal' | 'sidebar';
+export type SelectorMode = 'popover' | 'modal' | 'sidebar';
 
 /** Single mode — same on all screen sizes */
 export type SingleDisplayMode = {
@@ -43,15 +43,15 @@ export type ResponsiveDisplayMode = {
 export type DisplayMode = SingleDisplayMode | ResponsiveDisplayMode;
 
 // ============================================================================
-// DROPDOWN CONFIG
-// Raw shape for dropdown container styling from Sanity dropdownConfig.
-// Matches DROPDOWN_CONFIG_FRAGMENT fields exactly.
+// POPOVER CONFIG
+// Raw shape for popover container styling from Sanity popoverConfig.
+// Matches POPOVER_CONFIG_FRAGMENT fields exactly.
 // ============================================================================
 
-export type RawDropdownConfig =
+export type RawPopoverConfig =
   | {
-      borderRadius?: number | null;
-      shadow?: string | null;
+      borderRadius?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | null;
+      shadow?: 'none' | 'sm' | 'md' | 'lg' | null;
       showBorder?: boolean | null;
       borderWidth?: number | null;
     }
@@ -121,7 +121,7 @@ export type RawDisplayMode = {
 
 /**
  * Full config for header actions and announcement bar placements.
- * Supports all three display modes (dropdown, modal, sidebar) and
+ * Supports all three display modes (popover, modal, sidebar) and
  * responsive breakpoint configuration.
  */
 export type LocaleSelectorConfig = {
@@ -129,22 +129,22 @@ export type LocaleSelectorConfig = {
   showChevron: boolean;
   colorScheme: RawColorScheme;
   displayMode: DisplayMode;
-  dropdownConfig: RawDropdownConfig;
+  popoverConfig: RawPopoverConfig;
   sidebarConfig: RawSidebarConfig;
   modalConfig: RawModalConfig;
 };
 
 /**
  * Simplified config for the mobile placement.
- * Always dropdown mode — no display mode logic needed since
+ * Always popover mode — no display mode logic needed since
  * it's already inside a drawer (mobileLocaleSelector uses
- * dropdownCountrySelector schema type).
+ * countrySelectorPopover schema type).
  */
-export type DropdownLocaleSelectorConfig = {
+export type PopoverLocaleSelectorConfig = {
   triggerVariant: TriggerVariant;
   showChevron: boolean;
   colorScheme: RawColorScheme;
-  dropdownConfig: RawDropdownConfig;
+  popoverConfig: RawPopoverConfig;
 };
 
 // ============================================================================
@@ -157,15 +157,15 @@ export interface LocaleSelectorProps {
   /** Which header placement this instance belongs to */
   placementId: PlacementId;
   /**
-   * When true, forces dropdown mode opening upward.
+   * When true, forces popover mode opening upward.
    * Used when locale selector is rendered inside the mobile menu aside.
    */
   inMobileMenu?: boolean;
 }
 
-export interface DropdownLocaleSelectorProps {
-  /** Resolved dropdown-only config from Sanity */
-  config: DropdownLocaleSelectorConfig;
+export interface PopoverLocaleSelectorProps {
+  /** Resolved popover-only config from Sanity */
+  config: PopoverLocaleSelectorConfig;
 }
 
 export interface LocaleTriggerProps {

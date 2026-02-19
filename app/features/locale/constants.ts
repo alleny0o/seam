@@ -1,4 +1,4 @@
-import type {LocaleSelectorConfig, DropdownLocaleSelectorConfig} from './types';
+import type {LocaleSelectorConfig, PopoverLocaleSelectorConfig} from './types';
 
 // ============================================================================
 // FLAG CDN
@@ -26,16 +26,16 @@ export const LOCALE_SELECTOR_DEFAULTS: LocaleSelectorConfig = {
   colorScheme: null,
   displayMode: {
     kind: 'single',
-    mode: 'dropdown',
+    mode: 'popover',
   },
-  dropdownConfig: null,
+  popoverConfig: null,
   sidebarConfig: null,
   modalConfig: null,
 };
 
-export const DROPDOWN_LOCALE_SELECTOR_DEFAULTS: DropdownLocaleSelectorConfig = {
+export const POPOVER_LOCALE_SELECTOR_DEFAULTS: PopoverLocaleSelectorConfig = {
   triggerVariant: 'flag-country',
   showChevron: true,
   colorScheme: null,
-  dropdownConfig: null,
+  popoverConfig: null,
 };
