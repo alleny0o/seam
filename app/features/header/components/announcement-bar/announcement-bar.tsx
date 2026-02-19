@@ -21,8 +21,8 @@ import {SanityExternalLink} from '~/components/sanity/link/sanity-external-link'
 import type {AnnouncementBarEntry, UtilityLink} from '../../types';
 import {
   LocaleSelector,
-  RawSanityLocaleSelectorConfig,
   resolveLocaleSelectorConfig,
+  type RawSanityLocaleSelectorConfig,
 } from '~/features/locale';
 
 /** Default padding value in pixels when not specified */
