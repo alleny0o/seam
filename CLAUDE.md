@@ -117,6 +117,12 @@ Route loaders call `resolveShopifyPromises({document, request, storefront})` whi
 - `($locale).$.tsx` — catch-all for CMS pages (fetches Sanity `PAGE_QUERY` by slug/handle)
 - `($locale).products.$productHandle.tsx` / `($locale).collections.$collectionHandle.tsx` — templated via Sanity
 
+## Sanity stegaClean
+
+- Use `isType(obj, '_type')` from `~/utils/sanity-utils` for all `_type` union discriminations — never inline `stegaClean(x._type) === '...'` with `as Extract<>` casts
+- Use `stegaClean()` directly for non-`_type` fields (slugs, documentType, aspectRatio, etc.)
+- Never clean display/render text fields — stega encoding powers click-to-edit overlays in Sanity Presentation mode
+
 ## Sanity CMS
 
 - Schema: `documents/` (page, product, collection), `objects/`, `singletons/` (header, footer, theme)
