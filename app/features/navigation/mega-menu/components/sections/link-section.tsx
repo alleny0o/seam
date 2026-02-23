@@ -1,3 +1,4 @@
+import {stegaClean} from '@sanity/client/stega';
 import {SanityInternalLink} from '~/components/sanity/link/sanity-internal-link';
 import {SanityExternalLink} from '~/components/sanity/link/sanity-external-link';
 import {SanityReferenceLink} from '~/components/sanity/link/sanity-reference-link';
@@ -32,11 +33,11 @@ export function LinkSection({data, className}: LinkSectionProps) {
           <ul className="space-y-4">
             {data.links.map((link) => (
               <li key={link._key} className="mega-menu-link">
-                {link._type === 'internalLink' && (
-                  <SanityInternalLink data={link} />
+                {stegaClean(link._type) === 'internalLink' && (
+                  <SanityInternalLink data={link as Extract<typeof link, {_type: 'internalLink'}>} />
                 )}
-                {link._type === 'externalLink' && (
-                  <SanityExternalLink data={link} />
+                {stegaClean(link._type) === 'externalLink' && (
+                  <SanityExternalLink data={link as Extract<typeof link, {_type: 'externalLink'}>} />
                 )}
               </li>
             ))}

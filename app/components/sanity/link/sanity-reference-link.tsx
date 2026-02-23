@@ -26,7 +26,7 @@ export const SanityReferenceLink = React.forwardRef<
 
   if (!data) return null;
 
-  const type = data.documentType;
+  const type = stegaClean(data.documentType);
   const slug = 'slug' in data && data.slug ? data.slug.current : null;
 
   const buildUrl = () => {

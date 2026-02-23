@@ -1,3 +1,4 @@
+import {stegaClean} from '@sanity/client/stega';
 import {useHeaderSettings} from '~/features/header';
 import {useAsideClose} from '~/features/aside';
 import {SanityInternalLink} from '~/components/sanity/link/sanity-internal-link';
@@ -57,14 +58,14 @@ export function MobileNavContent({data}: MobileNavContentProps) {
             role="none"
             style={{paddingTop: `${itemPaddingY}px`, paddingBottom: `${itemPaddingY}px`}}
           >
-            {item._type === 'internalLink' && (
+            {stegaClean(item._type) === 'internalLink' && (
               <SanityInternalLink
-                data={item}
+                data={item as Extract<typeof item, {_type: 'internalLink'}>}
                 onClick={handleClose}
               />
             )}
-            {item._type === 'externalLink' && (
-              <SanityExternalLink data={item} />
+            {stegaClean(item._type) === 'externalLink' && (
+              <SanityExternalLink data={item as Extract<typeof item, {_type: 'externalLink'}>} />
             )}
           </li>
         ))}

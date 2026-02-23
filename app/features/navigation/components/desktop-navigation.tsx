@@ -1,3 +1,4 @@
+import {stegaClean} from '@sanity/client/stega';
 import {useHeaderSettings} from '~/features/header';
 
 import type {HeaderMenu} from '../types';
@@ -37,15 +38,15 @@ export function DesktopNavigation() {
     >
       <ul className="flex h-full items-center" role="menubar">
         {items.map((item) => {
-          switch (item._type) {
+          switch (stegaClean(item._type)) {
             case 'internalLink':
-              return <InternalLinkItem key={item._key} item={item} />;
+              return <InternalLinkItem key={item._key} item={item as Extract<typeof item, {_type: 'internalLink'}>} />;
 
             case 'externalLink':
-              return <ExternalLinkItem key={item._key} item={item} />;
+              return <ExternalLinkItem key={item._key} item={item as Extract<typeof item, {_type: 'externalLink'}>} />;
 
             case 'megaMenu':
-              return <MegaMenuItem key={item._key} item={item} />;
+              return <MegaMenuItem key={item._key} item={item as Extract<typeof item, {_type: 'megaMenu'}>} />;
 
             default:
               return null;

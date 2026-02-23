@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from 'react';
 import {useNavigation} from 'react-router';
+import {stegaClean} from '@sanity/client/stega';
 import {useHeaderSettings} from '~/features/header';
 import type {MegaMenuType} from '../../types';
 
@@ -39,7 +40,7 @@ export function MegaMenuProvider({children}: {children: ReactNode}) {
   const dropdownRef = useRef<HTMLElement | null>(null);
 
   const header = useHeaderSettings();
-  const behaviorSetting = header?.desktopMegaMenuBehavior ?? 'hover';
+  const behaviorSetting = stegaClean(header?.desktopMegaMenuBehavior) ?? 'hover';
   const behavior: 'hover' | 'click' =
     behaviorSetting === 'click' ? 'click' : 'hover';
   const allowParentLinks = header?.desktopAllowMegaMenuParentLinks ?? true;

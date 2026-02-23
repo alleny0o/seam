@@ -1,3 +1,4 @@
+import {stegaClean} from '@sanity/client/stega';
 import {SanityReferenceLink} from '~/components/sanity/link/sanity-reference-link';
 import {SanityImage} from '~/components/sanity/sanity-image';
 import {useHeaderSettings} from '~/features/header';
@@ -54,23 +55,23 @@ export function ImageBlock({data, className}: ImageBlockProps) {
   });
 
   // Map Sanity values to classes/values
-  const aspectRatioValue = ASPECT_RATIOS[data.aspectRatio as AspectRatio] || '1/1';
-  const borderRadiusClass = BORDER_RADIUS[data.borderRadius as BorderRadius] || BORDER_RADIUS['none'];
-  const overlayTextColorClass = OVERLAY_TEXT_COLORS[data.overlayTextColor as OverlayTextColor] || OVERLAY_TEXT_COLORS['white'];
-  
+  const aspectRatioValue = ASPECT_RATIOS[stegaClean(data.aspectRatio) as AspectRatio] || '1/1';
+  const borderRadiusClass = BORDER_RADIUS[stegaClean(data.borderRadius) as BorderRadius] || BORDER_RADIUS['none'];
+  const overlayTextColorClass = OVERLAY_TEXT_COLORS[stegaClean(data.overlayTextColor) as OverlayTextColor] || OVERLAY_TEXT_COLORS['white'];
+
   // Get content layout mode and overlay opacity
-  const contentLayout = data.contentLayout || 'overlay';
+  const contentLayout = stegaClean(data.contentLayout) || 'overlay';
   const overlayOpacity = data.overlayOpacity ?? DEFAULT_OVERLAY_OPACITY;
 
   // Get image hover effect class
-  const imageHoverClass = getCardHoverClasses(data.hoverEffect);
+  const imageHoverClass = getCardHoverClasses(stegaClean(data.hoverEffect));
 
   // CTA rendering helper function
   const renderCTA = () => {
     if (!data.linkText) return null;
 
-    const linkStyle = data.linkStyle || 'text';
-    const ctaHoverClass = getHoverClasses(data.ctaHoverEffect);
+    const linkStyle = stegaClean(data.linkStyle) || 'text';
+    const ctaHoverClass = getHoverClasses(stegaClean(data.ctaHoverEffect));
 
     // TEXT ONLY STYLE
     if (linkStyle === 'text') {
@@ -91,10 +92,10 @@ export function ImageBlock({data, className}: ImageBlockProps) {
 
     // BUTTON STYLES (filled, outlined, ghost)
     const colorScheme =
-      CTA_COLOR_SCHEMES[data.ctaColorScheme as CTAColorScheme] ||
+      CTA_COLOR_SCHEMES[stegaClean(data.ctaColorScheme) as CTAColorScheme] ||
       CTA_COLOR_SCHEMES.primary;
     const borderRadius =
-      CTA_BORDER_RADIUS[data.ctaBorderRadius as CTABorderRadius] ||
+      CTA_BORDER_RADIUS[stegaClean(data.ctaBorderRadius) as CTABorderRadius] ||
       CTA_BORDER_RADIUS.md;
     const paddingX = data.ctaPaddingX ?? DEFAULT_CTA_PADDING_X;
     const paddingY = data.ctaPaddingY ?? DEFAULT_CTA_PADDING_Y;

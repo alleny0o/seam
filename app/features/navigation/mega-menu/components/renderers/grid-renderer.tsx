@@ -1,4 +1,5 @@
 import {m} from 'motion/react';
+import {stegaClean} from '@sanity/client/stega';
 import {LinkSection} from '../sections/link-section';
 import {ImageBlock} from '../sections/image-block';
 import {GRID_LAYOUTS, type GridLayout} from '~/features/navigation/mega-menu/constants';
@@ -25,11 +26,11 @@ interface GridRendererProps {
  */
 export function GridRenderer({menu, shouldAnimate}: GridRendererProps) {
   const gridColumnClass =
-    GRID_LAYOUTS[menu.gridLayout as GridLayout] || DEFAULT_GRID_COLUMN_CLASS;
+    GRID_LAYOUTS[stegaClean(menu.gridLayout) as GridLayout] || DEFAULT_GRID_COLUMN_CLASS;
 
   // Get stagger settings from header
   const header = useHeaderSettings();
-  const staggerType = header?.desktopMegaMenuContentStagger ?? 'none';
+  const staggerType = stegaClean(header?.desktopMegaMenuContentStagger) ?? 'none';
   const staggerDelay =
     (header?.desktopMegaMenuStaggerDelay ?? DEFAULT_STAGGER_DELAY_MS) / MS_TO_SECONDS;
   const staggerStartDelay =
@@ -41,10 +42,10 @@ export function GridRenderer({menu, shouldAnimate}: GridRendererProps) {
       {menu.content?.map((block, index) => {
         let content = null;
 
-        if (block._type === 'linkSection') {
-          content = <LinkSection data={block} />;
-        } else if (block._type === 'imageBlock') {
-          content = <ImageBlock data={block} />;
+        if (stegaClean(block._type) === 'linkSection') {
+          content = <LinkSection data={block as Extract<typeof block, {_type: 'linkSection'}>} />;
+        } else if (stegaClean(block._type) === 'imageBlock') {
+          content = <ImageBlock data={block as Extract<typeof block, {_type: 'imageBlock'}>} />;
         }
 
         if (!content) return null;

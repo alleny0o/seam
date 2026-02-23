@@ -1,4 +1,5 @@
 import {m} from 'motion/react';
+import {stegaClean} from '@sanity/client/stega';
 import {LinkSection} from '../sections/link-section';
 import {ImageBlock} from '../sections/image-block';
 import {SECTION_PRESETS, type SectionPreset} from '~/features/navigation/mega-menu/constants';
@@ -24,12 +25,12 @@ interface SectionRendererProps {
  */
 export function SectionRenderer({menu, shouldAnimate}: SectionRendererProps) {
   const preset =
-    SECTION_PRESETS[menu.sectionPreset as SectionPreset] ||
+    SECTION_PRESETS[stegaClean(menu.sectionPreset) as SectionPreset] ||
     SECTION_PRESETS['4-sections'];
 
   // Get stagger settings from header
   const header = useHeaderSettings();
-  const staggerType = header?.desktopMegaMenuContentStagger ?? 'none';
+  const staggerType = stegaClean(header?.desktopMegaMenuContentStagger) ?? 'none';
   const staggerDelay =
     (header?.desktopMegaMenuStaggerDelay ?? DEFAULT_STAGGER_DELAY_MS) / MS_TO_SECONDS;
   const staggerStartDelay =
@@ -57,10 +58,10 @@ export function SectionRenderer({menu, shouldAnimate}: SectionRendererProps) {
             {blocks?.map((block, blockIndex) => {
               let content = null;
 
-              if (block._type === 'linkSection') {
-                content = <LinkSection data={block} />;
-              } else if (block._type === 'imageBlock') {
-                content = <ImageBlock data={block} />;
+              if (stegaClean(block._type) === 'linkSection') {
+                content = <LinkSection data={block as Extract<typeof block, {_type: 'linkSection'}>} />;
+              } else if (stegaClean(block._type) === 'imageBlock') {
+                content = <ImageBlock data={block as Extract<typeof block, {_type: 'imageBlock'}>} />;
               }
 
               if (!content) return null;

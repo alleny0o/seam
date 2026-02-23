@@ -1,4 +1,5 @@
 import React from 'react';
+import {stegaClean} from '@sanity/client/stega';
 
 import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
 import {ChevronLeft, ChevronRight} from 'lucide-react';
@@ -163,18 +164,24 @@ export function AnnouncementBar() {
 
       {isUtilitiesActive && (
         <nav
-          className="utility-links pointer-events-auto absolute top-0 right-(--container-padding) bottom-0 z-10 hidden items-center justify-end gap-4 border-l border-current bg-background pl-4 lg:flex"
+          className="utility-links pointer-events-auto absolute top-0 right-(--container-padding) bottom-0 z-10 hidden items-center justify-end gap-5 border-l border-current bg-background pl-4 lg:flex"
           aria-label="Utility links"
         >
           {utilityLinks?.map((link: UtilityLink) => (
             <React.Fragment key={link._key}>
-              {link._type === 'internalLink' && (
-                <SanityInternalLink data={link} className="cursor-pointer">
+              {stegaClean(link._type) === 'internalLink' && (
+                <SanityInternalLink
+                  data={link as Extract<UtilityLink, {_type: 'internalLink'}>}
+                  className="cursor-pointer"
+                >
                   {link.name}
                 </SanityInternalLink>
               )}
-              {link._type === 'externalLink' && (
-                <SanityExternalLink data={link} className="cursor-pointer">
+              {stegaClean(link._type) === 'externalLink' && (
+                <SanityExternalLink
+                  data={link as Extract<UtilityLink, {_type: 'externalLink'}>}
+                  className="cursor-pointer"
+                >
                   {link.name}
                 </SanityExternalLink>
               )}

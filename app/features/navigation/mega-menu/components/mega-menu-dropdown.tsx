@@ -1,5 +1,6 @@
 import {useRef, useEffect, useState} from 'react';
 import {m, AnimatePresence} from 'motion/react';
+import {stegaClean} from '@sanity/client/stega';
 
 import {useMegaMenu} from '../context/mega-menu-context';
 import {useHeaderSettings} from '~/features/header';
@@ -31,7 +32,7 @@ export function MegaMenuDropdown() {
 
   const styles = useMegaMenuStyles();
   const header = useHeaderSettings();
-  const animationType = header?.desktopMegaMenuAnimation ?? DEFAULT_ANIMATION_TYPE;
+  const animationType = stegaClean(header?.desktopMegaMenuAnimation) ?? DEFAULT_ANIMATION_TYPE;
   const duration =
     (header?.desktopMegaMenuAnimationDuration ?? DEFAULT_ANIMATION_DURATION_MS) /
     MS_TO_SECONDS;
@@ -87,7 +88,7 @@ export function MegaMenuDropdown() {
 
   // Check if menu has any content
   const hasContent =
-    openMenu?.layout === 'grid'
+    stegaClean(openMenu?.layout) === 'grid'
       ? openMenu?.content?.length
       : [
           openMenu?.section1,
@@ -137,7 +138,7 @@ export function MegaMenuDropdown() {
             }}
           >
             <div className="container">
-              {openMenu.layout === 'grid' ? (
+              {stegaClean(openMenu.layout) === 'grid' ? (
                 <GridRenderer
                   menu={openMenu}
                   shouldAnimate={shouldAnimateContent}

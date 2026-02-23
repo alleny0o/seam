@@ -1,3 +1,4 @@
+import {stegaClean} from '@sanity/client/stega';
 import {useHeaderSettings} from '~/features/header';
 import {getHoverClasses} from '~/utils/hover-classes';
 
@@ -24,5 +25,5 @@ export function useNavHoverClasses(type: NavHoverType): string {
       break;
   }
 
-  return getHoverClasses(effect);
+  return getHoverClasses(stegaClean(effect));
 }

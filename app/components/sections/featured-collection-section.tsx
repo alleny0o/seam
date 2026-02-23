@@ -8,6 +8,7 @@ import {Await, Link, useLoaderData} from 'react-router';
 import {flattenConnection} from '@shopify/hydrogen';
 import {Suspense} from 'react';
 
+import {stegaClean} from '@sanity/client/stega';
 import {useLocalePath} from '~/hooks/use-locale-path';
 import {useSanityThemeContent} from '~/hooks/use-sanity-theme-content';
 
@@ -30,7 +31,7 @@ export function FeaturedCollectionSection(
   props: SectionDefaultProps & {data: FeaturedCollectionSectionProps},
 ) {
   const collectionHandle = useLocalePath({
-    path: `/collections/${props.data.collection?.store?.slug?.current}`,
+    path: `/collections/${stegaClean(props.data.collection?.store?.slug?.current)}`,
   });
   const {themeContent} = useSanityThemeContent();
 

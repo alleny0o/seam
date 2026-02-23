@@ -61,7 +61,7 @@ const SanityInternalLink = React.forwardRef<
 
   const {link, name} = data;
 
-  const documentType = link?.documentType;
+  const documentType = stegaClean(link?.documentType);
   const slug = link?.slug?.current;
   const anchor = data.anchor ? `#${data.anchor}` : '';
 

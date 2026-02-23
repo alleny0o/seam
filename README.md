@@ -1,4 +1,4 @@
-# Seam
+# SEAM
 
 A configurable Shopify Hydrogen theme built on the Fluid starter.
 
