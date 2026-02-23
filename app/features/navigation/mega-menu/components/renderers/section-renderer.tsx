@@ -1,5 +1,6 @@
 import {m} from 'motion/react';
 import {stegaClean} from '@sanity/client/stega';
+import {isType} from '~/utils/sanity-utils';
 import {LinkSection} from '../sections/link-section';
 import {ImageBlock} from '../sections/image-block';
 import {SECTION_PRESETS, type SectionPreset} from '~/features/navigation/mega-menu/constants';
@@ -58,10 +59,10 @@ export function SectionRenderer({menu, shouldAnimate}: SectionRendererProps) {
             {blocks?.map((block, blockIndex) => {
               let content = null;
 
-              if (stegaClean(block._type) === 'linkSection') {
-                content = <LinkSection data={block as Extract<typeof block, {_type: 'linkSection'}>} />;
-              } else if (stegaClean(block._type) === 'imageBlock') {
-                content = <ImageBlock data={block as Extract<typeof block, {_type: 'imageBlock'}>} />;
+              if (isType(block, 'linkSection')) {
+                content = <LinkSection data={block} />;
+              } else if (isType(block, 'imageBlock')) {
+                content = <ImageBlock data={block} />;
               }
 
               if (!content) return null;
